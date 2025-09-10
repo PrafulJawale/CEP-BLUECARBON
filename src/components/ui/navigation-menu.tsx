@@ -4,6 +4,8 @@ import { cva } from "class-variance-authority";
 import { ChevronDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const NavigationMenu = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
@@ -107,6 +109,54 @@ const NavigationMenuIndicator = React.forwardRef<
 ));
 NavigationMenuIndicator.displayName = NavigationMenuPrimitive.Indicator.displayName;
 
+// Role-aware application navigation that mirrors routes in src/App.tsx
+const AppNavigation: React.FC<{ className?: string }> = ({ className }) => {
+  const { user, isAuthenticated } = useAuth();
+
+  // Map available routes according to role & auth (keeps in sync with src/App.tsx)
+  const items: { to: string; label: string; show: boolean }[] = [
+    { to: "/", label: "Home", show: true },
+    { to: "/community", label: "Community", show: true },
+    { to: "/gis-mapping", label: "GIS Mapping", show: true },
+    { to: "/iot-simulation", label: "IoT Simulation", show: true },
+    // Authenticated routes
+    { to: "/dashboard", label: "Dashboard", show: !!isAuthenticated },
+    { to: "/upload", label: "Upload Data", show: !!isAuthenticated },
+    { to: "/registry", label: "Registry", show: !!isAuthenticated },
+    { to: "/marketplace", label: "Marketplace", show: !!isAuthenticated },
+    // Role-restricted
+    { to: "/admin", label: "Admin Panel", show: !!isAuthenticated && user?.role === "Admin" },
+    {
+      to: "/verification-workflow",
+      label: "Verification",
+      show:
+        !!isAuthenticated &&
+        (user?.role === "Admin" || user?.role === "Govt Officer"),
+    },
+    // Authentication actions
+    { to: "/login", label: "Login", show: !isAuthenticated },
+    { to: "/register", label: "Register", show: !isAuthenticated },
+  ];
+
+  return (
+    <NavigationMenu className={className}>
+      <NavigationMenuList>
+        {items.filter(i => i.show).map((item) => (
+          <NavigationMenuItem key={item.to}>
+            <NavigationMenuLink asChild>
+              <Link to={item.to} className="px-4 py-2 text-sm rounded-md hover:bg-accent/10">
+                {item.label}
+              </Link>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+        ))}
+      </NavigationMenuList>
+    </NavigationMenu>
+  );
+};
+
+export { AppNavigation };
+
 export {
   navigationMenuTriggerStyle,
   NavigationMenu,
@@ -117,4 +167,5 @@ export {
   NavigationMenuLink,
   NavigationMenuIndicator,
   NavigationMenuViewport,
+  // AppNavigation is the role-aware menu to use
 };

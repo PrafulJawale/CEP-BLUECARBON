@@ -22,6 +22,8 @@ import GISMapping from "./pages/GISMapping";
 import IoTSimulation from "./pages/IoTSimulation";
 import VerificationWorkflow from "./pages/VerificationWorkflow";
 import NotFound from "./pages/NotFound";
+import { ProtectedRoute, RoleRoute } from './components/RouteGuards';
+import type { UserRole } from '@/contexts/AuthContext';
 
 const queryClient = new QueryClient();
 
@@ -41,15 +43,26 @@ const App = () => (
                       <Route path="/" element={<LandingPage />} />
                       <Route path="/login" element={<LoginPage />} />
                       <Route path="/register" element={<RegisterPage />} />
-                      <Route path="/dashboard" element={<Dashboard />} />
-                      <Route path="/upload" element={<DataUpload />} />
-                      <Route path="/registry" element={<Registry />} />
-                      <Route path="/marketplace" element={<Marketplace />} />
-                      <Route path="/admin" element={<AdminPanel />} />
+
+                      {/* Authenticated routes */}
+                      <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                      <Route path="/upload" element={<ProtectedRoute><DataUpload /></ProtectedRoute>} />
+                      <Route path="/registry" element={<ProtectedRoute><Registry /></ProtectedRoute>} />
+                      <Route path="/marketplace" element={<ProtectedRoute><Marketplace /></ProtectedRoute>} />
+
+                      {/* Admin-only */}
+                      <Route path="/admin" element={<RoleRoute allowed={["Admin"] as UserRole[]}><AdminPanel /></RoleRoute>} />
+
                       <Route path="/community" element={<CommunityPortal />} />
                       <Route path="/gis-mapping" element={<GISMapping />} />
                       <Route path="/iot-simulation" element={<IoTSimulation />} />
-                      <Route path="/verification-workflow" element={<VerificationWorkflow />} />
+
+                      {/* Verification workflow: admin and govt officer */}
+                      <Route
+                        path="/verification-workflow"
+                        element={<RoleRoute allowed={["Admin", "Govt Officer"] as UserRole[]}><VerificationWorkflow /></RoleRoute>}
+                      />
+
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </BrowserRouter>
