@@ -47,6 +47,24 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Custom Ocean Colors
+        ocean: {
+          deep: "hsl(var(--ocean-deep))",
+          medium: "hsl(var(--ocean-medium))",
+          light: "hsl(var(--ocean-light))",
+          surface: "hsl(var(--ocean-surface))",
+        },
+        sea: {
+          green: {
+            dark: "hsl(var(--sea-green-dark))",
+            DEFAULT: "hsl(var(--sea-green))",
+            light: "hsl(var(--sea-green-light))",
+          },
+        },
+        coral: {
+          DEFAULT: "hsl(var(--coral))",
+          light: "hsl(var(--coral-light))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -62,6 +80,12 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      backgroundImage: {
+        'gradient-ocean': 'var(--gradient-ocean)',
+        'gradient-sea': 'var(--gradient-sea)',
+        'gradient-surface': 'var(--gradient-surface)',
+        'gradient-coral': 'var(--gradient-coral)',
       },
       keyframes: {
         "accordion-down": {
@@ -80,10 +104,42 @@ export default {
             height: "0",
           },
         },
+        wave: {
+          "0%, 100%": {
+            transform: "translateY(0px) scale(1)",
+          },
+          "50%": {
+            transform: "translateY(-20px) scale(1.05)",
+          },
+        },
+        float: {
+          "0%, 100%": {
+            transform: "translateY(0px) rotate(0deg)",
+          },
+          "33%": {
+            transform: "translateY(-10px) rotate(1deg)",
+          },
+          "66%": {
+            transform: "translateY(-5px) rotate(-1deg)",
+          },
+        },
+        "fade-in": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(20px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        wave: "wave 3s ease-in-out infinite",
+        float: "float 6s ease-in-out infinite",
+        "fade-in": "fade-in 0.6s ease-out",
       },
     },
   },

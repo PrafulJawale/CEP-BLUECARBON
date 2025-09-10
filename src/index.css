@@ -2,41 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* BlueCarbon MRV Design System - Ocean & Nature Inspired with Glassmorphism */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Ocean Blue Primary Palette */
+    --background: 220 100% 98%;
+    --foreground: 213 100% 12%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 220 50% 97%;
+    --card-foreground: 213 90% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 220 100% 99%;
+    --popover-foreground: 213 90% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Deep Ocean Blue Primary */
+    --primary: 213 88% 45%;
+    --primary-foreground: 220 100% 98%;
+    
+    /* Ocean Secondary - Teal */
+    --secondary: 180 65% 85%;
+    --secondary-foreground: 180 90% 15%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Muted Ocean Tones */
+    --muted: 200 30% 92%;
+    --muted-foreground: 200 15% 45%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Sea Green Accent */
+    --accent: 158 70% 75%;
+    --accent-foreground: 158 90% 15%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 220 100% 98%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --border: 200 20% 88%;
+    --input: 200 25% 90%;
+    --ring: 213 88% 45%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --radius: 1rem;
 
-    --radius: 0.5rem;
+    /* Custom Ocean Colors */
+    --ocean-deep: 213 88% 35%;
+    --ocean-medium: 213 75% 55%;
+    --ocean-light: 213 60% 75%;
+    --ocean-surface: 213 45% 90%;
+    
+    /* Sea Green Variants */
+    --sea-green-dark: 158 70% 35%;
+    --sea-green: 158 70% 55%;
+    --sea-green-light: 158 60% 75%;
+    
+    /* Coral Accent */
+    --coral: 16 85% 65%;
+    --coral-light: 16 75% 85%;
+    
+    /* Gradients */
+    --gradient-ocean: linear-gradient(135deg, hsl(var(--ocean-deep)), hsl(var(--ocean-medium)));
+    --gradient-sea: linear-gradient(135deg, hsl(var(--sea-green-dark)), hsl(var(--sea-green)));
+    --gradient-surface: linear-gradient(180deg, hsl(var(--ocean-surface)), hsl(var(--background)));
+    --gradient-coral: linear-gradient(135deg, hsl(var(--coral)), hsl(var(--coral-light)));
+    
+    /* Glassmorphism */
+    --glass-bg: 220 100% 98% / 0.1;
+    --glass-border: 220 50% 80% / 0.2;
+    --glass-shadow: 0 8px 32px hsl(213 88% 35% / 0.1);
+    
+    /* Animations */
+    --wave-duration: 3s;
+    --float-duration: 6s;
 
     --sidebar-background: 0 0% 98%;
 
@@ -56,33 +89,49 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 213 45% 8%;
+    --foreground: 220 100% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 213 40% 12%;
+    --card-foreground: 220 95% 90%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 213 45% 10%;
+    --popover-foreground: 220 95% 90%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 213 75% 65%;
+    --primary-foreground: 213 45% 8%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 180 30% 25%;
+    --secondary-foreground: 180 50% 85%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 200 15% 20%;
+    --muted-foreground: 200 20% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 158 50% 45%;
+    --accent-foreground: 158 20% 90%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 220 100% 95%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 200 15% 25%;
+    --input: 200 15% 25%;
+    --ring: 213 75% 65%;
+    
+    /* Dark Ocean Colors */
+    --ocean-deep: 213 75% 25%;
+    --ocean-medium: 213 65% 45%;
+    --ocean-light: 213 55% 65%;
+    --ocean-surface: 213 35% 85%;
+    
+    --sea-green-dark: 158 60% 25%;
+    --sea-green: 158 50% 45%;
+    --sea-green-light: 158 40% 65%;
+    
+    --coral: 16 75% 55%;
+    --coral-light: 16 65% 75%;
+    
+    --glass-bg: 213 45% 8% / 0.1;
+    --glass-border: 213 30% 30% / 0.2;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -101,5 +150,96 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    background: var(--gradient-surface);
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Glassmorphism Components */
+  .glass {
+    background: hsl(var(--glass-bg));
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--glass-border));
+    box-shadow: var(--glass-shadow);
+  }
+  
+  .glass-card {
+    @apply glass rounded-2xl p-6;
+  }
+  
+  /* Ocean Wave Animation */
+  .wave {
+    background: var(--gradient-ocean);
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: wave var(--wave-duration) ease-in-out infinite;
+  }
+  
+  .wave:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+  
+  .wave:nth-child(3) {
+    animation-delay: 1s;
+  }
+  
+  /* Floating Animation */
+  .float {
+    animation: float var(--float-duration) ease-in-out infinite;
+  }
+  
+  .float:nth-child(even) {
+    animation-delay: 3s;
+  }
+  
+  /* Gradient Text */
+  .gradient-text {
+    background: var(--gradient-ocean);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .gradient-sea-text {
+    background: var(--gradient-sea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+@layer utilities {
+  .animate-wave {
+    animation: wave var(--wave-duration) ease-in-out infinite;
+  }
+  
+  .animate-float {
+    animation: float var(--float-duration) ease-in-out infinite;
+  }
+}
+
+/* Keyframes */
+@keyframes wave {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(-5px) rotate(-1deg);
   }
 }
