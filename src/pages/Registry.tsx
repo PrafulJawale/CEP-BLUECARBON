@@ -27,7 +27,7 @@ const Registry = () => {
     <div className="min-h-screen bg-gradient-surface">
       {/* Header */}
       <header className="glass px-6 py-8">
-        <div className="container mx-auto text-center">
+        <div className="container mt-20 mx-auto text-center">
           <h1 className="text-4xl font-bold gradient-text mb-4">Blockchain Registry</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Transparent, verified blue carbon projects registered on the blockchain

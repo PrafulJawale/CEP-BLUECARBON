@@ -24,6 +24,7 @@ import VerificationWorkflow from "./pages/VerificationWorkflow";
 import NotFound from "./pages/NotFound";
 import { ProtectedRoute, RoleRoute } from './components/RouteGuards';
 import type { UserRole } from '@/contexts/AuthContext';
+import Navbar from "@/components/Navbar";
 
 const queryClient = new QueryClient();
 
@@ -39,10 +40,11 @@ const App = () => (
                   <Toaster />
                   <Sonner />
                   <BrowserRouter>
-                    <Routes>
-                      <Route path="/" element={<LandingPage />} />
-                      <Route path="/login" element={<LoginPage />} />
-                      <Route path="/register" element={<RegisterPage />} />
+                    <Navbar />
+                     <Routes>
+                       <Route path="/" element={<LandingPage />} />
+                       <Route path="/login" element={<LoginPage />} />
+                       <Route path="/register" element={<RegisterPage />} />
 
                       {/* Authenticated routes */}
                       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

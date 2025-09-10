@@ -36,19 +36,19 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gradient-surface">
       {/* Header */}
       <header className="glass px-6 py-4">
-        <div className="container mx-auto flex justify-between items-center">
+        <div className="container mt-20 mx-auto flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-bold gradient-text">Dashboard</h1>
             <p className="text-muted-foreground">Welcome back, {user.username}</p>
           </div>
-          <div className="flex items-center space-x-4">
+          {/* <div className="flex items-center space-x-4">
             <span className="px-3 py-1 bg-gradient-ocean text-white rounded-full text-sm">
               {user.role}
             </span>
             <Button variant="ghost" onClick={logout}>
               Logout
             </Button>
-          </div>
+          </div> */}
         </div>
       </header>
 

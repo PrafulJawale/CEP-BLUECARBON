@@ -123,7 +123,7 @@ const DataUpload = () => {
     <div className="min-h-screen bg-gradient-surface">
       {/* Header */}
       <header className="glass px-6 py-4">
-        <div className="container mx-auto">
+        <div className="container mt-20 mx-auto">
           <h1 className="text-2xl font-bold gradient-text">Upload Project Data</h1>
           <p className="text-muted-foreground">Submit your blue carbon project for verification</p>
         </div>

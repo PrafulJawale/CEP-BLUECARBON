@@ -186,7 +186,7 @@ const GISMapping = () => {
     <div className="min-h-screen bg-gradient-surface">
       {/* Header */}
       <header className="glass px-6 py-4">
-        <div className="container mx-auto flex justify-between items-center">
+        <div className="container mt-20 mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <Button variant="ghost" onClick={() => navigate('/dashboard')}>
               <Home className="h-5 w-5" />

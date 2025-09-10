@@ -40,3 +40,23 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Sidebar push behavior on desktop when html.sidebar-open is present.
+   Add .app-content to your main content wrapper (the element that should be pushed). */
+:root {
+  --sidebar-width: 320px; /* kept in sync by component */
+}
+
+/* When sidebar is open on desktop, push main content to the right by sidebar width.
+   Replace .app-content with your actual main container selector if different. */
+html.sidebar-open .app-content {
+  margin-left: var(--sidebar-width);
+  transition: margin-left 200ms ease;
+}
+
+/* Ensure small screens are unaffected */
+@media (max-width: 767px) {
+  html.sidebar-open .app-content {
+    margin-left: 0;
+  }
+}

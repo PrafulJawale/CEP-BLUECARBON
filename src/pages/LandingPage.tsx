@@ -83,7 +83,7 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen bg-gradient-surface">
       {/* Navigation */}
-      <nav className="glass fixed top-0 w-full z-50 px-6 py-4">
+      {/* <nav className="glass fixed top-0 w-full z-50 px-6 py-4">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <Waves className="h-8 w-8 text-ocean-deep" />
@@ -98,7 +98,7 @@ const LandingPage = () => {
             </Link>
           </div>
         </div>
-      </nav>
+      </nav> */}
 
       {/* Hero Section */}
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">

@@ -54,7 +54,7 @@ const AdminPanel = () => {
     <div className="min-h-screen bg-gradient-surface">
       {/* Header */}
       <header className="glass px-6 py-6">
-        <div className="container mx-auto">
+        <div className="container mt-20 mx-auto">
           <div className="flex items-center space-x-3 mb-2">
             <Shield className="h-8 w-8 text-ocean-deep" />
             <h1 className="text-3xl font-bold gradient-text">NCCR Admin Panel</h1>
