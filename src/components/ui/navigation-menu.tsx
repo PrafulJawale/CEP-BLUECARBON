@@ -6,6 +6,8 @@ import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Menu, X } from "lucide-react";
 
 const NavigationMenu = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
@@ -112,6 +114,8 @@ NavigationMenuIndicator.displayName = NavigationMenuPrimitive.Indicator.displayN
 // Role-aware application navigation that mirrors routes in src/App.tsx
 const AppNavigation: React.FC<{ className?: string }> = ({ className }) => {
   const { user, isAuthenticated } = useAuth();
+  const isMobile = useIsMobile();
+  const [open, setOpen] = React.useState(false);
 
   // Map available routes according to role & auth (keeps in sync with src/App.tsx)
   const items: { to: string; label: string; show: boolean }[] = [
@@ -138,6 +142,66 @@ const AppNavigation: React.FC<{ className?: string }> = ({ className }) => {
     { to: "/register", label: "Register", show: !isAuthenticated },
   ];
 
+  // Mobile-first: show a slide-over drawer with blur backdrop
+  if (isMobile) {
+    return (
+      <div className={cn("flex items-center", className)}>
+        <button
+          aria-expanded={open}
+          aria-label="Open navigation"
+          onClick={() => setOpen((s) => !s)}
+          className="p-2 rounded-md hover:bg-accent/10 text-gray-900"
+        >
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+
+        <div
+          aria-hidden={!open}
+          className={`fixed inset-0 z-[60] transition-opacity duration-200 ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        >
+          {/* backdrop */}
+          <div onClick={() => setOpen(false)} className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+
+          {/* slide-over panel (slides from right; sits on top of sidebar via CSS vars) */}
+          <aside
+            className={`absolute right-0 top-0 h-full w-4/5 max-w-sm transform bg-white border-l shadow-xl transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"}`}
+            role="dialog"
+            aria-modal="true"
+            style={{ 
+              zIndex: 70, 
+              right: "var(--sidebar-width, 0px)", // Offset by sidebar width if present; fallback to 0 for no sidebar
+            }}
+          >
+            <div className="flex items-center justify-between px-4 py-3 border-b">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-gradient-ocean flex items-center justify-center text-white font-semibold">BC</div>
+                <div className="text-sm font-semibold text-gray-900">Navigation</div>
+              </div>
+              <button aria-label="Close" onClick={() => setOpen(false)} className="p-2 rounded-md hover:bg-accent/10 text-gray-900">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="p-4 space-y-4 overflow-auto h-[calc(100%-72px)]">
+              <nav>
+                <ul className="flex flex-col gap-2">
+                  {items.filter(i => i.show).map((item) => (
+                    <li key={item.to}>
+                      <Link to={item.to} onClick={() => setOpen(false)} className="block px-4 py-2 rounded-md hover:bg-accent/10">
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
+          </aside>
+        </div>
+      </div>
+    );
+  }
+
+  // Desktop: original top navigation (radix) for larger screens
   return (
     <NavigationMenu className={className}>
       <NavigationMenuList>
