@@ -33,22 +33,44 @@ const Dashboard = () => {
   const totalTrees = userProjects.reduce((sum, project) => sum + project.treeCount, 0);
 
   return (
-    <div className="min-h-screen bg-gradient-surface">
+    <div className="min-h-screen bg-gradient-surface" id="main-content">
+      {/* Breadcrumb - UX4G Standard */}
+      <div className="bg-muted/30 py-2">
+        <div className="container mx-auto px-6">
+          <nav className="text-sm text-muted-foreground">
+            <span>Home</span> / <span className="text-foreground font-medium">Dashboard</span>
+          </nav>
+        </div>
+      </div>
+
       {/* Header */}
-      <header className="glass px-6 py-4">
-        <div className="container mt-20 mx-auto flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold gradient-text">Dashboard</h1>
-            <p className="text-muted-foreground">Welcome back, {user.username}</p>
+      <header className="glass px-6 py-6">
+        <div className="container mx-auto">
+          <div className="flex flex-col md:flex-row md:items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold gradient-text mb-1">Dashboard</h1>
+              <p className="text-muted-foreground">Welcome back, <span className="font-medium text-foreground">{user.username}</span></p>
+              <div className="flex items-center mt-2">
+                <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
+                  {user.role}
+                </span>
+                <span className="ml-3 text-sm text-muted-foreground">
+                  Last login: {new Date().toLocaleDateString('en-IN')}
+                </span>
+              </div>
+            </div>
+            
+            {/* Quick Actions */}
+            <div className="flex items-center space-x-3 mt-4 md:mt-0">
+              <Button variant="outline" size="sm" onClick={() => navigate('/upload')}>
+                + New Project
+              </Button>
+              <Button variant="ghost" size="sm" onClick={() => navigate('/wallet')}>
+                <Coins className="h-4 w-4 mr-2" />
+                Wallet
+              </Button>
+            </div>
           </div>
-          {/* <div className="flex items-center space-x-4">
-            <span className="px-3 py-1 bg-gradient-ocean text-white rounded-full text-sm">
-              {user.role}
-            </span>
-            <Button variant="ghost" onClick={logout}>
-              Logout
-            </Button>
-          </div> */}
         </div>
       </header>
 

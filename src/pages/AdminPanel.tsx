@@ -51,15 +51,59 @@ const AdminPanel = () => {
   const rejectedProjects = projects.filter(p => p.status === 'rejected');
 
   return (
-    <div className="min-h-screen bg-gradient-surface">
+    <div className="min-h-screen bg-gradient-surface" id="main-content">
+      {/* Government Header Pattern - UX4G */}
+      <div className="bg-destructive/10 border-b border-destructive/20 py-2">
+        <div className="container mx-auto px-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center text-sm">
+              <Shield className="h-4 w-4 text-destructive mr-2" />
+              <span className="text-destructive font-medium">Restricted Access</span>
+              <span className="ml-2 text-muted-foreground">• Admin Panel</span>
+            </div>
+            <div className="text-xs text-muted-foreground">
+              Session: {new Date().toLocaleTimeString('en-IN')}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Breadcrumb */}
+      <div className="bg-muted/30 py-2">
+        <div className="container mx-auto px-6">
+          <nav className="text-sm text-muted-foreground">
+            <span>Home</span> / <span>Admin</span> / <span className="text-foreground font-medium">Verification Panel</span>
+          </nav>
+        </div>
+      </div>
+
       {/* Header */}
       <header className="glass px-6 py-6">
-        <div className="container mt-20 mx-auto">
-          <div className="flex items-center space-x-3 mb-2">
-            <Shield className="h-8 w-8 text-ocean-deep" />
-            <h1 className="text-3xl font-bold gradient-text">NCCR Admin Panel</h1>
+        <div className="container mx-auto">
+          <div className="flex items-start justify-between">
+            <div>
+              <div className="flex items-center space-x-3 mb-2">
+                <Shield className="h-8 w-8 text-ocean-deep" />
+                <div>
+                  <h1 className="text-3xl font-bold gradient-text">NCCR Admin Panel</h1>
+                  <p className="text-sm text-muted-foreground">National Carbon Credit Registry</p>
+                </div>
+              </div>
+              <p className="text-muted-foreground mt-2">Project verification and fraud detection system</p>
+            </div>
+            
+            {/* Admin Actions */}
+            <div className="flex items-center space-x-3">
+              <Button variant="outline" size="sm">
+                <BarChart3 className="h-4 w-4 mr-2" />
+                Export Report
+              </Button>
+              <Button variant="destructive" size="sm">
+                <AlertTriangle className="h-4 w-4 mr-2" />
+                System Alert
+              </Button>
+            </div>
           </div>
-          <p className="text-muted-foreground">Project verification and fraud detection system</p>
         </div>
       </header>
 

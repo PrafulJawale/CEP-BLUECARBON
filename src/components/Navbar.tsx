@@ -1,207 +1,237 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom"; // Added for global portal rendering
-import { Link, useNavigate } from "react-router-dom";
-import { AppNavigation } from "@/components/ui/navigation-menu";
-import { useAuth } from "@/contexts/AuthContext";
-import { Button } from "@/components/ui/button";
-import { Menu, X, Home, Grid, LogOut, LogIn, User } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
+import React, { useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/button';
+import { Menu, X, Home, User, LogOut, Settings, Bell, Wallet } from 'lucide-react';
+import { useNotifications } from '@/contexts/NotificationContext';
 
-const getInitials = (name?: string) =>
-  name
-    ? name
-        .split(" ")
-        .map((n) => n[0])
-        .slice(0, 2)
-        .join("")
-        .toUpperCase()
-    : "U";
+const UX4GHeader = () => {
+  const [fontSize, setFontSize] = useState('medium');
+  const [isSkipVisible, setIsSkipVisible] = useState(false);
 
-const Navbar: React.FC = () => {
-  const { user, isAuthenticated, logout } = useAuth();
-  const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-  const isMobile = useIsMobile(); // Added for mobile-first checks
-
-  const handleLogout = () => {
-    logout();
-    navigate("/", { replace: true });
-    setOpen(false);
+  const adjustFontSize = (size: 'small' | 'medium' | 'large') => {
+    setFontSize(size);
+    const root = document.documentElement;
+    switch (size) {
+      case 'small':
+        root.style.fontSize = '14px';
+        break;
+      case 'medium':
+        root.style.fontSize = '16px';
+        break;
+      case 'large':
+        root.style.fontSize = '18px';
+        break;
+    }
   };
 
-  // Map available routes (mirrors AppNavigation for consistency)
-  const navItems: { to: string; label: string; show: boolean }[] = [
-    { to: "/", label: "Home", show: true },
-    { to: "/community", label: "Community", show: true },
-    { to: "/gis-mapping", label: "GIS Mapping", show: true },
-    { to: "/iot-simulation", label: "IoT Simulation", show: true },
-    { to: "/dashboard", label: "Dashboard", show: !!isAuthenticated },
-    { to: "/upload", label: "Upload Data", show: !!isAuthenticated },
-    { to: "/registry", label: "Registry", show: !!isAuthenticated },
-    { to: "/marketplace", label: "Marketplace", show: !!isAuthenticated },
-    { to: "/admin", label: "Admin Panel", show: !!isAuthenticated && user?.role === "Admin" },
-    {
-      to: "/verification-workflow",
-      label: "Verification",
-      show: !!isAuthenticated && (user?.role === "Admin" || user?.role === "Govt Officer"),
-    },
-    { to: "/login", label: "Login", show: !isAuthenticated },
-    { to: "/register", label: "Register", show: !isAuthenticated },
-  ];
+  const skipToContent = () => {
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) {
+      mainContent.focus();
+      mainContent.scrollIntoView();
+    }
+  };
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 bg-white/70 backdrop-blur-sm border-b border-slate-200 shadow-sm">
-      <div className="container mx-auto px-4 py-3 flex items-center justify-between gap-3">
-        {/* Brand - mobile first, single-line (no stacked text) */}
-        <Link to="/" className="flex items-center gap-3 min-w-0" aria-label="BlueCarbon home">
-          <div className="w-10 h-10 rounded-lg bg-gradient-ocean flex items-center justify-center text-white font-semibold">
-            BC
+    <div className="bg-white border-b border-border">
+      {/* Skip to Main Content - UX4G Accessibility */}
+      <button
+        onClick={skipToContent}
+        onFocus={() => setIsSkipVisible(true)}
+        onBlur={() => setIsSkipVisible(false)}
+        className={`${
+          isSkipVisible ? 'block' : 'sr-only'
+        } absolute top-0 left-0 z-50 bg-primary text-primary-foreground px-4 py-2 text-sm font-medium`}
+      >
+        Skip to Main Content
+      </button>
+
+      {/* Government Header - UX4G Standard */}
+      <div className="bg-orange-500 text-white py-1">
+        <div className="container mx-auto px-4 flex items-center justify-between text-sm">
+          <div className="flex items-center space-x-2">
+            <img 
+              src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAyNCAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjUuMzMzMzMiIGZpbGw9IiNGRjk5MzMiLz4KPHJlY3QgeT0iNS4zMzMzNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjUuMzMzMzMiIGZpbGw9IiNGRkZGRkYiLz4KPHJlY3QgeT0iMTAuNjY2NyIgd2lkdGg9IjI0IiBoZWlnaHQ9IjUuMzMzMzMiIGZpbGw9IiMxMzhBMzYiLz4KPGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSIyLjY2NjY3IiBmaWxsPSIjMDAwMDgwIi8+Cjwvc3ZnPgo=" 
+              alt="Indian Flag" 
+              className="w-6 h-4"
+            />
+            <span className="font-medium">Government of India</span>
           </div>
-          <span className="text-sm font-semibold text-gray-900 truncate">BlueCarbon</span>
-        </Link>
-
-        {/* Compact center (hidden on smallest screens) */}
-        <div className="hidden sm:flex sm:items-center sm:gap-3 md:gap-6">
-          {/* small icon quick links for tablet+ */}
-          <AppNavigation />
-        </div>
-
-        {/* Right actions */}
-        <div className="flex items-center gap-2">
-          {/* profile badge (minimal, single line) */}
-          {isAuthenticated && user ? (
-            <div className="hidden md:flex items-center gap-2 px-2 py-1 rounded-md hover:bg-accent/5">
-              <div className="w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center text-sm">
-                {getInitials(user.username)}
-              </div>
-              <div className="flex flex-col leading-tight">
-                <span className="text-sm font-medium text-gray-900 truncate">{user.username}</span>
-              </div>
-            </div>
-          ) : null}
-
-          {/* desktop action buttons */}
-          <div className="hidden md:flex items-center gap-2">
-            {isAuthenticated && user ? (
-              <Button variant="ghost" size="sm" onClick={handleLogout} className="text-gray-900">
-                <LogOut className="mr-2 h-4 w-4" /> Logout
-              </Button>
-            ) : (
-              <>
-                <Link to="/login">
-                  <Button variant="glass" size="sm" className="text-gray-900">
-                    <LogIn className="mr-2 h-4 w-4" /> Login
-                  </Button>
-                </Link>
-                <Link to="/register">
-                  <Button variant="ocean" size="sm" className="text-white">
-                    Register
-                  </Button>
-                </Link>
-              </>
-            )}
-          </div>
-
-          {/* mobile menu toggle */}
-          <button
-            aria-expanded={open}
-            aria-label="Open navigation"
-            onClick={() => setOpen((s) => !s)}
-            className="ml-1 inline-flex items-center justify-center rounded-md p-2 hover:bg-accent/10 md:hidden text-gray-900"
-          >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile slide-over (right side) - mobile-first with offset and on-top behavior */}
-      {isMobile && ReactDOM.createPortal(
-        <div
-          aria-hidden={!open}
-          className={`fixed inset-0 z-[999] transition-opacity duration-200 ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
-        >
-          {/* overlay */}
-          <div onClick={() => setOpen(false)} className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-
-          {/* panel */}
-          <aside
-            className={`absolute right-0 top-0 h-full w-4/5 max-w-sm transform bg-white border-l shadow-xl transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"}`}
-            role="dialog"
-            aria-modal="true"
-            style={{
-              zIndex: 99999, // Increased to ensure it's on top of everything at app level
-              right: "var(--sidebar-width, 0px)", // Offset by sidebar width if present; fallback to 0 for no sidebar
-            }}
-          >
-            <div className="flex items-center justify-between px-4 py-3 border-b">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-gradient-ocean flex items-center justify-center text-white font-semibold">
-                  BC
-                </div>
-                <div className="text-sm font-semibold text-gray-900">BlueCarbon</div>
-              </div>
-              <button aria-label="Close" onClick={() => setOpen(false)} className="p-2 rounded-md hover:bg-accent/10 text-gray-900">
-                <X className="h-5 w-5" />
+          <div className="flex items-center space-x-4">
+            {/* Font Size Controls - UX4G Accessibility */}
+            <div className="flex items-center space-x-1">
+              <button
+                onClick={() => adjustFontSize('small')}
+                className={`px-2 py-1 text-xs ${fontSize === 'small' ? 'bg-white text-orange-500' : 'hover:bg-orange-600'}`}
+              >
+                -A
+              </button>
+              <button
+                onClick={() => adjustFontSize('medium')}
+                className={`px-2 py-1 text-sm ${fontSize === 'medium' ? 'bg-white text-orange-500' : 'hover:bg-orange-600'}`}
+              >
+                A
+              </button>
+              <button
+                onClick={() => adjustFontSize('large')}
+                className={`px-2 py-1 text-base ${fontSize === 'large' ? 'bg-white text-orange-500' : 'hover:bg-orange-600'}`}
+              >
+                A+
               </button>
             </div>
+            <span className="text-sm">English</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-            <div className="p-4 space-y-4 overflow-auto h-[calc(100%-72px)]">
-              {/* Direct navigation links (replaces <AppNavigation /> to avoid duplication) */}
-              <nav>
-                <ul className="flex flex-col gap-2">
-                  {navItems.filter(i => i.show).map((item) => (
-                    <li key={item.to}>
-                      <Link to={item.to} onClick={() => setOpen(false)} className="block px-4 py-2 rounded-md hover:bg-accent/10">
-                        {item.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+const Navbar = () => {
+  const { user, logout } = useAuth();
+  const { notifications } = useNotifications();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-              <div className="pt-2 border-t">
-                {isAuthenticated && user ? (
-                  <>
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center text-sm">
-                        {getInitials(user.username)}
-                      </div>
-                      <div>
-                        <div className="text-sm font-medium text-gray-900">{user.username}</div>
-                        <div className="text-xs text-gray-900/80">{user.role}</div>
-                      </div>
+  const unreadCount = notifications.filter(n => !n.read).length;
+
+  const navItems = user ? [
+    { name: 'Dashboard', path: '/dashboard', icon: Home },
+    { name: 'Upload Data', path: '/upload', icon: User },
+    { name: 'Registry', path: '/registry', icon: Settings },
+    { name: 'Marketplace', path: '/marketplace', icon: Wallet },
+    { name: 'GIS Mapping', path: '/gis-mapping', icon: Settings },
+    { name: 'IoT Sensors', path: '/iot-simulation', icon: Settings },
+    { name: 'Carbon Wallet', path: '/wallet', icon: Wallet },
+  ] : [
+    { name: 'Home', path: '/', icon: Home },
+    { name: 'Registry', path: '/registry', icon: Settings },
+  ];
+
+  // Add admin-specific items
+  if (user?.role === 'Admin') {
+    navItems.push({ name: 'Admin Panel', path: '/admin', icon: Settings });
+  }
+
+  return (
+    <>
+      <UX4GHeader />
+      
+      {/* Main Navigation */}
+      <nav className="bg-white shadow-sm border-b border-border sticky top-0 z-40">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <Link to="/" className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-ocean rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-lg">BC</span>
+              </div>
+              <div>
+                <h1 className="font-bold text-lg gradient-text">BlueCarbon MRV</h1>
+                <p className="text-xs text-muted-foreground">National Carbon Credit Registry</p>
+              </div>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-6">
+              {navItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    location.pathname === item.path
+                      ? 'bg-primary text-primary-foreground'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                  }`}
+                >
+                  <item.icon className="h-4 w-4" />
+                  <span>{item.name}</span>
+                </Link>
+              ))}
+            </div>
+
+            {/* User Actions */}
+            <div className="flex items-center space-x-4">
+              {user && (
+                <>
+                  {/* Notifications */}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => navigate('/notifications')}
+                    className="relative"
+                  >
+                    <Bell className="h-5 w-5" />
+                    {unreadCount > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-destructive text-destructive-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                        {unreadCount}
+                      </span>
+                    )}
+                  </Button>
+
+                  {/* User Menu */}
+                  <div className="flex items-center space-x-3">
+                    <div className="hidden md:block text-right">
+                      <p className="text-sm font-medium">{user.username}</p>
+                      <p className="text-xs text-muted-foreground">{user.role}</p>
                     </div>
-
-                    <div className="grid grid-cols-2 gap-2">
-                      <Button variant="ghost" className="flex gap-2 items-center justify-center text-gray-900" onClick={() => { navigate("/dashboard"); setOpen(false); }}>
-                        <Grid className="h-4 w-4" /> <span className="hidden sm:inline">Dashboard</span>
-                      </Button>
-                      <Button variant="ocean" className="flex gap-2 items-center justify-center" onClick={handleLogout}>
-                        <LogOut className="h-4 w-4 text-white" /> <span className="hidden sm:inline text-white">Logout</span>
-                      </Button>
-                    </div>
-                  </>
-                ) : (
-                  <div className="grid grid-cols-2 gap-2">
-                    <Link to="/login" onClick={() => setOpen(false)}>
-                      <Button variant="glass" className="w-full text-gray-900">
-                        <LogIn className="mr-2 h-4 w-4" /> <span className="hidden sm:inline">Login</span>
-                      </Button>
-                    </Link>
-                    <Link to="/register" onClick={() => setOpen(false)}>
-                      <Button variant="ocean" className="w-full text-white">
-                        <User className="mr-2 h-4 w-4 text-white" /> <span className="hidden sm:inline text-white">Register</span>
-                      </Button>
-                    </Link>
+                    <Button variant="ghost" size="sm" onClick={logout}>
+                      <LogOut className="h-4 w-4" />
+                    </Button>
                   </div>
-                )}
+                </>
+              )}
+
+              {!user && (
+                <div className="flex space-x-2">
+                  <Button variant="ghost" size="sm" onClick={() => navigate('/login')}>
+                    Login
+                  </Button>
+                  <Button size="sm" onClick={() => navigate('/register')}>
+                    Register
+                  </Button>
+                </div>
+              )}
+
+              {/* Mobile Menu Toggle */}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="md:hidden"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </Button>
+            </div>
+          </div>
+
+          {/* Mobile Navigation */}
+          {isMenuOpen && (
+            <div className="md:hidden py-4 border-t border-border">
+              <div className="space-y-2">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                      location.pathname === item.path
+                        ? 'bg-primary text-primary-foreground'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                    }`}
+                  >
+                    <item.icon className="h-4 w-4" />
+                    <span>{item.name}</span>
+                  </Link>
+                ))}
               </div>
             </div>
-          </aside>
-        </div>,
-        document.body // Render globally to the document body
-      )}
-    </nav>
+          )}
+        </div>
+      </nav>
+    </>
   );
 };
 

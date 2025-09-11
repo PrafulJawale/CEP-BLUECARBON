@@ -43,7 +43,7 @@ const CarbonWallet = () => {
   const totalEarned = userProjects.reduce((sum, p) => sum + p.creditsGenerated, 0);
 
   return (
-    <div className="min-h-screen bg-gradient-surface">
+    <div className="min-h-screen bg-gradient-surface" id="main-content">
       <header className="glass px-6 py-4">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-4">
