@@ -9,6 +9,7 @@ import { NotificationProvider } from "@/contexts/NotificationContext";
 import { IoTProvider } from "@/contexts/IoTContext";
 import { ForumProvider } from "@/contexts/ForumContext";
 import { GameificationProvider } from "@/contexts/GameificationContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -33,12 +34,13 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <AuthProvider>
-        <DataProvider>
-          <NotificationProvider>
-            <IoTProvider>
-              <ForumProvider>
-                <GameificationProvider>
+      <LanguageProvider>
+        <AuthProvider>
+          <DataProvider>
+            <NotificationProvider>
+              <IoTProvider>
+                <ForumProvider>
+                  <GameificationProvider>
                   <BrowserRouter>
                     <div className="min-h-screen flex flex-col">
                       <Navbar />
@@ -76,12 +78,13 @@ const App = () => (
                     <Toaster />
                     <Sonner />
                   </BrowserRouter>
-                </GameificationProvider>
-              </ForumProvider>
-            </IoTProvider>
-          </NotificationProvider>
-        </DataProvider>
-      </AuthProvider>
+                  </GameificationProvider>
+                </ForumProvider>
+              </IoTProvider>
+            </NotificationProvider>
+          </DataProvider>
+        </AuthProvider>
+      </LanguageProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

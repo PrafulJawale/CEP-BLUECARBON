@@ -3,7 +3,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Home, User, LogOut, Settings, Bell, Wallet } from 'lucide-react';
-import { useNotifications } from '@/contexts/NotificationContext';
+import { useTranslation } from '@/contexts/LanguageContext';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 const UX4GHeader = () => {
   const [fontSize, setFontSize] = useState('medium');
@@ -80,7 +81,8 @@ const UX4GHeader = () => {
                 A+
               </button>
             </div>
-            <span className="text-sm">English</span>
+            <span className="text-sm">{t('navbar.language')}</span>
+            <LanguageSwitcher />
           </div>
         </div>
       </div>
@@ -91,6 +93,7 @@ const UX4GHeader = () => {
 const Navbar = () => {
   const { user, logout } = useAuth();
   const { notifications } = useNotifications();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
