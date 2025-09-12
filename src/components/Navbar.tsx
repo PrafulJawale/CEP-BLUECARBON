@@ -5,10 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Menu, X, Home, User, LogOut, Settings, Bell, Wallet } from 'lucide-react';
 import { useTranslation } from '@/contexts/LanguageContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { useNotifications } from '@/contexts/NotificationContext';
 
 const UX4GHeader = () => {
   const [fontSize, setFontSize] = useState('medium');
   const [isSkipVisible, setIsSkipVisible] = useState(false);
+  const { t } = useTranslation();
 
   const adjustFontSize = (size: 'small' | 'medium' | 'large') => {
     setFontSize(size);
