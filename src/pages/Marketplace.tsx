@@ -7,10 +7,12 @@ import { Badge } from '@/components/ui/badge';
 import { Coins, TrendingUp, ShoppingCart, Leaf } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { gsap } from 'gsap';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 const Marketplace = () => {
   const { user } = useAuth();
   const { getAvailableCredits, purchaseCredits } = useData();
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Page animations
@@ -35,8 +37,8 @@ const Marketplace = () => {
   const handlePurchase = (creditId: string) => {
     if (!user) {
       toast({
-        title: "Login required",
-        description: "Please login to purchase credits.",
+        title: t('marketplace.loginRequired'),
+        description: t('marketplace.loginToPurchase'),
         variant: "destructive",
       });
       return;
@@ -45,13 +47,13 @@ const Marketplace = () => {
     const success = purchaseCredits(creditId, user.id);
     if (success) {
       toast({
-        title: "Purchase successful!",
-        description: "Carbon credits have been added to your portfolio.",
+        title: t('marketplace.purchaseSuccessful'),
+        description: t('marketplace.creditsAdded'),
       });
     } else {
       toast({
-        title: "Purchase failed",
-        description: "Credits are no longer available.",
+        title: t('marketplace.purchaseFailed'),
+        description: t('marketplace.creditsUnavailable'),
         variant: "destructive",
       });
     }
@@ -62,9 +64,9 @@ const Marketplace = () => {
       {/* Header */}
       <header className="glass px-6 py-8">
         <div className="container mt-20 mx-auto text-center">
-          <h1 className="text-4xl font-bold gradient-text mb-4">Carbon Credit Marketplace</h1>
+          <h1 className="text-4xl font-bold gradient-text mb-4">{t('marketplace.carbonMarketplace')}</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Trade verified blue carbon credits from mangrove and coastal restoration projects
+            {t('marketplace.buyAndSell')}
           </p>
           
           {/* Animated Credit Tokens */}
@@ -88,7 +90,7 @@ const Marketplace = () => {
           <Card className="marketplace-card glass-card text-center">
             <div className="p-6">
               <div className="text-3xl font-bold gradient-text mb-2">₹25</div>
-              <div className="text-muted-foreground">Avg. Price/Credit</div>
+              <div className="text-muted-foreground">{t('marketplace.avgPricePerCredit')}</div>
             </div>
           </Card>
 
@@ -97,21 +99,21 @@ const Marketplace = () => {
               <div className="text-3xl font-bold gradient-sea-text mb-2">
                 {availableCredits.reduce((sum, c) => sum + c.amount, 0).toLocaleString()}
               </div>
-              <div className="text-muted-foreground">Available Credits</div>
+              <div className="text-muted-foreground">{t('marketplace.availableCredits')}</div>
             </div>
           </Card>
 
           <Card className="marketplace-card glass-card text-center">
             <div className="p-6">
               <div className="text-3xl font-bold gradient-text mb-2">152</div>
-              <div className="text-muted-foreground">Transactions Today</div>
+              <div className="text-muted-foreground">{t('marketplace.transactionsToday')}</div>
             </div>
           </Card>
 
           <Card className="marketplace-card glass-card text-center">
             <div className="p-6">
               <div className="text-3xl font-bold gradient-sea-text mb-2">+12%</div>
-              <div className="text-muted-foreground">Price Change</div>
+              <div className="text-muted-foreground">{t('marketplace.priceChange')}</div>
             </div>
           </Card>
         </div>
@@ -119,7 +121,7 @@ const Marketplace = () => {
         {/* Available Credits */}
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold gradient-text">Available Credits</h2>
+            <h2 className="text-2xl font-bold gradient-text">{t('marketplace.featuredCredits')}</h2>
             <Badge variant="secondary" className="bg-gradient-ocean text-white">
               Live Market
             </Badge>
@@ -129,9 +131,9 @@ const Marketplace = () => {
             <Card className="marketplace-card glass-card">
               <div className="p-12 text-center">
                 <Coins className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">No Credits Available</h3>
+                <h3 className="text-xl font-semibold mb-2">{t('marketplace.availableCredits')}</h3>
                 <p className="text-muted-foreground">
-                  Check back later for new carbon credits from verified projects
+                  {t('marketplace.loginToPurchase')}
                 </p>
               </div>
             </Card>
@@ -161,13 +163,13 @@ const Marketplace = () => {
 
                     <div className="grid grid-cols-2 gap-4 mb-6">
                       <div>
-                        <div className="text-sm text-muted-foreground">Amount</div>
+                        <div className="text-sm text-muted-foreground">{t('marketplace.creditsAvailable')}</div>
                         <div className="text-xl font-semibold gradient-sea-text">
                           {credit.amount.toLocaleString()}
                         </div>
                       </div>
                       <div>
-                        <div className="text-sm text-muted-foreground">Total Value</div>
+                        <div className="text-sm text-muted-foreground">{t('marketplace.totalValue')}</div>
                         <div className="text-xl font-semibold gradient-text">
                           ₹{(credit.amount * credit.price).toLocaleString()}
                         </div>
@@ -191,12 +193,12 @@ const Marketplace = () => {
                       onClick={() => handlePurchase(credit.id)}
                     >
                       <ShoppingCart className="h-4 w-4 mr-2" />
-                      Purchase Credits
+                      {t('marketplace.buyNow')}
                     </Button>
 
                     {/* Seller Info */}
                     <div className="mt-4 p-3 bg-ocean-surface/10 rounded-lg">
-                      <div className="text-xs text-muted-foreground">Seller ID:</div>
+                      <div className="text-xs text-muted-foreground">{t('marketplace.verificationStatus')}:</div>
                       <div className="font-mono text-xs text-ocean-deep">
                         #{credit.sellerId}
                       </div>
@@ -211,15 +213,15 @@ const Marketplace = () => {
         {/* Trading Info */}
         <Card className="marketplace-card glass-card mt-12">
           <div className="p-8">
-            <h3 className="text-xl font-semibold gradient-text mb-4">How Carbon Credit Trading Works</h3>
+            <h3 className="text-xl font-semibold gradient-text mb-4">{t('marketplace.tradingWorks')}</h3>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="text-center">
                 <div className="w-12 h-12 bg-gradient-ocean rounded-lg flex items-center justify-center mx-auto mb-3">
                   <Leaf className="h-6 w-6 text-white" />
                 </div>
-                <h4 className="font-semibold mb-2">Verify Projects</h4>
+                <h4 className="font-semibold mb-2">{t('marketplace.verifyProjects')}</h4>
                 <p className="text-sm text-muted-foreground">
-                  Projects are verified through AI monitoring and blockchain registration
+                  {t('marketplace.verifyProjectsDesc')}
                 </p>
               </div>
               
@@ -227,9 +229,9 @@ const Marketplace = () => {
                 <div className="w-12 h-12 bg-gradient-sea rounded-lg flex items-center justify-center mx-auto mb-3">
                   <Coins className="h-6 w-6 text-white" />
                 </div>
-                <h4 className="font-semibold mb-2">Mint Credits</h4>
+                <h4 className="font-semibold mb-2">{t('marketplace.mintCredits')}</h4>
                 <p className="text-sm text-muted-foreground">
-                  Verified CO₂ sequestration is converted to tradeable carbon credits
+                  {t('marketplace.mintCreditsDesc')}
                 </p>
               </div>
               
@@ -237,9 +239,9 @@ const Marketplace = () => {
                 <div className="w-12 h-12 bg-gradient-coral rounded-lg flex items-center justify-center mx-auto mb-3">
                   <TrendingUp className="h-6 w-6 text-white" />
                 </div>
-                <h4 className="font-semibold mb-2">Trade Freely</h4>
+                <h4 className="font-semibold mb-2">{t('marketplace.tradeFreely')}</h4>
                 <p className="text-sm text-muted-foreground">
-                  Buy and sell credits in our transparent marketplace platform
+                  {t('marketplace.tradeFreelyDesc')}
                 </p>
               </div>
             </div>

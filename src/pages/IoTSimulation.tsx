@@ -21,11 +21,13 @@ import {
   Beaker
 } from 'lucide-react';
 import { gsap } from 'gsap';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 const IoTSimulation = () => {
   const { user } = useAuth();
   const { sensors, sensorData, getLatestDataBySensor, simulateRealTimeData } = useIoT();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [selectedSensor, setSelectedSensor] = useState<string | null>(null);
   const [isSimulating, setIsSimulating] = useState(false);
 
@@ -130,20 +132,20 @@ const IoTSimulation = () => {
               <Home className="h-5 w-5" />
             </Button>
             <div>
-              <h1 className="text-2xl font-bold gradient-text">IoT Live Simulation</h1>
-              <p className="text-muted-foreground">Real-time Environmental Monitoring</p>
+              <h1 className="text-2xl font-bold gradient-text">{t('navbar.iotSensors')}</h1>
+              <p className="text-muted-foreground">{t('iot.realTimeMonitoring')}</p>
             </div>
           </div>
           <div className="flex items-center space-x-4">
             <Badge variant={isSimulating ? "default" : "secondary"} className="bg-sea-green">
               <Activity className={`h-4 w-4 mr-2 ${isSimulating ? 'heartbeat' : ''}`} />
-              {isSimulating ? 'Live' : 'Paused'}
+              {isSimulating ? t('iot.live') : t('iot.paused')}
             </Badge>
             <Button
               variant={isSimulating ? "destructive" : "ocean"}
               onClick={() => setIsSimulating(!isSimulating)}
             >
-              {isSimulating ? 'Stop' : 'Start'} Simulation
+              {isSimulating ? t('iot.stop') : t('iot.start')} {t('iot.simulation')}
             </Button>
           </div>
         </div>
@@ -183,7 +185,7 @@ const IoTSimulation = () => {
 
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Location</span>
+                    <span className="text-sm text-muted-foreground">{t('iot.location')}</span>
                     <span className="text-sm font-medium">
                       {sensor.location.lat.toFixed(4)}, {sensor.location.lng.toFixed(4)}
                     </span>
@@ -192,7 +194,7 @@ const IoTSimulation = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
                       <Battery className="h-4 w-4" />
-                      <span className="text-sm">Battery</span>
+                      <span className="text-sm">{t('iot.battery')}</span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <Progress value={sensor.batteryLevel} className="w-16" />
@@ -204,25 +206,25 @@ const IoTSimulation = () => {
                     <div className="mt-4 pt-4 border-t border-ocean-surface">
                       <div className="grid grid-cols-2 gap-2 text-xs">
                         <div className="data-update">
-                          <span className="text-muted-foreground">Temp:</span>
+                          <span className="text-muted-foreground">{t('iot.temperature')}:</span>
                           <span className={`ml-1 font-medium ${getParameterColor('temperature', latestData.parameters.temperature)}`}>
                             {formatParameterValue('temperature', latestData.parameters.temperature)}
                           </span>
                         </div>
                         <div className="data-update">
-                          <span className="text-muted-foreground">pH:</span>
+                          <span className="text-muted-foreground">{t('iot.ph')}:</span>
                           <span className={`ml-1 font-medium ${getParameterColor('pH', latestData.parameters.pH)}`}>
                             {formatParameterValue('pH', latestData.parameters.pH)}
                           </span>
                         </div>
                         <div className="data-update">
-                          <span className="text-muted-foreground">Moisture:</span>
+                          <span className="text-muted-foreground">{t('iot.moisture')}:</span>
                           <span className={`ml-1 font-medium ${getParameterColor('soilMoisture', latestData.parameters.soilMoisture)}`}>
                             {formatParameterValue('soilMoisture', latestData.parameters.soilMoisture)}
                           </span>
                         </div>
                         <div className="data-update">
-                          <span className="text-muted-foreground">Salinity:</span>
+                          <span className="text-muted-foreground">{t('iot.salinity')}:</span>
                           <span className={`ml-1 font-medium ${getParameterColor('salinity', latestData.parameters.salinity)}`}>
                             {formatParameterValue('salinity', latestData.parameters.salinity)}
                           </span>
@@ -244,12 +246,12 @@ const IoTSimulation = () => {
         {selectedSensor && (
           <Card className="iot-card glass-card p-6">
             <h3 className="text-xl font-semibold mb-6 gradient-text">
-              Detailed Sensor Data: {sensors.find(s => s.id === selectedSensor)?.name}
+              {t('iot.detailedSensorData')}: {sensors.find(s => s.id === selectedSensor)?.name}
             </h3>
             
             {(() => {
               const latestData = getLatestDataBySensor(selectedSensor);
-              if (!latestData) return <p className="text-muted-foreground">No data available</p>;
+              if (!latestData) return <p className="text-muted-foreground">{t('iot.noDataAvailable')}</p>;
 
               return (
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -267,12 +269,12 @@ const IoTSimulation = () => {
                       </div>
                       
                       <div className="mt-2">
-                        <div className="text-xs text-muted-foreground mb-1">Status</div>
+                        <div className="text-xs text-muted-foreground mb-1">{t('iot.status')}</div>
                         <Badge 
                           variant={getParameterColor(param, value).includes('red') ? 'destructive' : 'default'}
                           className={getParameterColor(param, value).includes('red') ? '' : 'bg-sea-green text-white'}
                         >
-                          {getParameterColor(param, value).includes('red') ? 'Alert' : 'Normal'}
+                          {getParameterColor(param, value).includes('red') ? t('iot.alert') : t('iot.normal')}
                         </Badge>
                       </div>
                     </Card>
@@ -291,9 +293,9 @@ const IoTSimulation = () => {
               <div className="w-16 h-16 bg-gradient-ocean rounded-full flex items-center justify-center mx-auto mb-4">
                 <Activity className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Historical Data</h3>
+              <h3 className="text-lg font-semibold mb-2">{t('iot.historicalData')}</h3>
               <p className="text-muted-foreground text-sm">
-                View trends and historical sensor readings
+                {t('iot.viewTrends')}
               </p>
             </div>
           </Card>
@@ -304,9 +306,9 @@ const IoTSimulation = () => {
               <div className="w-16 h-16 bg-gradient-sea rounded-full flex items-center justify-center mx-auto mb-4">
                 <Zap className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Map View</h3>
+              <h3 className="text-lg font-semibold mb-2">{t('iot.mapView')}</h3>
               <p className="text-muted-foreground text-sm">
-                See sensor locations on interactive map
+                {t('iot.seeSensorLocations')}
               </p>
             </div>
           </Card>
@@ -317,9 +319,9 @@ const IoTSimulation = () => {
               <div className="w-16 h-16 bg-gradient-coral rounded-full flex items-center justify-center mx-auto mb-4">
                 <Eye className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Anomaly Detection</h3>
+              <h3 className="text-lg font-semibold mb-2">{t('iot.anomalyDetection')}</h3>
               <p className="text-muted-foreground text-sm">
-                AI-powered fraud and anomaly detection
+                {t('iot.aiPoweredDetection')}
               </p>
             </div>
           </Card>

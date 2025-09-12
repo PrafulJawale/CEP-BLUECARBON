@@ -7,11 +7,13 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Wallet, ArrowUpRight, ArrowDownLeft, Coins, TrendingUp, Home, Send } from 'lucide-react';
 import { gsap } from 'gsap';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 const CarbonWallet = () => {
   const { user } = useAuth();
   const { credits, transactions, getUserProjects } = useData();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [showTransfer, setShowTransfer] = useState(false);
 
   useEffect(() => {
@@ -51,13 +53,13 @@ const CarbonWallet = () => {
               <Home className="h-5 w-5" />
             </Button>
             <div>
-              <h1 className="text-2xl font-bold gradient-text">Carbon Credit Wallet</h1>
-              <p className="text-muted-foreground">Manage your carbon credits</p>
+              <h1 className="text-2xl font-bold gradient-text">{t('wallet.carbonWallet')}</h1>
+              <p className="text-muted-foreground">{t('wallet.manageCredits')}</p>
             </div>
           </div>
           <Badge variant="outline" className="bg-ocean-surface">
             <Wallet className="h-4 w-4 mr-2" />
-            {totalBalance} Credits
+            {totalBalance} {t('common.credits')}
           </Badge>
         </div>
       </header>
@@ -70,19 +72,19 @@ const CarbonWallet = () => {
               <Coins className="h-10 w-10 text-white" />
             </div>
             <h2 className="text-4xl font-bold gradient-text mb-2">{totalBalance.toLocaleString()}</h2>
-            <p className="text-muted-foreground mb-6">Available Carbon Credits</p>
+            <p className="text-muted-foreground mb-6">{t('wallet.availableCredits')}</p>
             <div className="grid grid-cols-3 gap-6">
               <div className="text-center">
                 <p className="text-2xl font-bold text-sea-green">{totalEarned}</p>
-                <p className="text-sm text-muted-foreground">Total Earned</p>
+                <p className="text-sm text-muted-foreground">{t('wallet.totalEarned')}</p>
               </div>
               <div className="text-center">
                 <p className="text-2xl font-bold text-coral">{userTransactions.length}</p>
-                <p className="text-sm text-muted-foreground">Transactions</p>
+                <p className="text-sm text-muted-foreground">{t('wallet.transactions')}</p>
               </div>
               <div className="text-center">
                 <p className="text-2xl font-bold text-ocean-medium">{userProjects.length}</p>
-                <p className="text-sm text-muted-foreground">Projects</p>
+                <p className="text-sm text-muted-foreground">{t('common.projects')}</p>
               </div>
             </div>
           </div>
@@ -91,7 +93,7 @@ const CarbonWallet = () => {
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Recent Transactions */}
           <Card className="wallet-card glass-card p-6">
-            <h3 className="text-lg font-semibold mb-4 gradient-text">Recent Transactions</h3>
+            <h3 className="text-lg font-semibold mb-4 gradient-text">{t('wallet.recentTransactions')}</h3>
             <div className="space-y-3">
               {userTransactions.slice(0, 5).map((transaction) => (
                 <div key={transaction.id} className="flex items-center justify-between p-3 bg-ocean-surface/20 rounded-lg">
@@ -103,7 +105,7 @@ const CarbonWallet = () => {
                     )}
                     <div>
                       <p className="font-medium text-sm">
-                        {transaction.sellerId === user.id ? 'Sold Credits' : 'Bought Credits'}
+                        {transaction.sellerId === user.id ? t('wallet.soldCredits') : t('wallet.boughtCredits')}
                       </p>
                       <p className="text-xs text-muted-foreground">
                         {new Date(transaction.timestamp).toLocaleDateString()}
@@ -121,19 +123,19 @@ const CarbonWallet = () => {
 
           {/* Quick Actions */}
           <Card className="wallet-card glass-card p-6">
-            <h3 className="text-lg font-semibold mb-4 gradient-text">Quick Actions</h3>
+            <h3 className="text-lg font-semibold mb-4 gradient-text">{t('wallet.quickActions')}</h3>
             <div className="space-y-3">
               <Button variant="ocean" className="w-full" onClick={() => navigate('/marketplace')}>
                 <Coins className="h-4 w-4 mr-2" />
-                Buy Credits
+                {t('wallet.buyCredits')}
               </Button>
               <Button variant="sea" className="w-full" onClick={() => setShowTransfer(!showTransfer)}>
                 <Send className="h-4 w-4 mr-2" />
-                Transfer Credits
+                {t('wallet.transferCredits')}
               </Button>
               <Button variant="outline" className="w-full" onClick={() => navigate('/marketplace')}>
                 <TrendingUp className="h-4 w-4 mr-2" />
-                Sell Credits
+                {t('wallet.sellCredits')}
               </Button>
             </div>
           </Card>

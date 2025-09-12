@@ -47,7 +47,7 @@ const UX4GHeader = () => {
           isSkipVisible ? 'block' : 'sr-only'
         } absolute top-0 left-0 z-50 bg-primary text-primary-foreground px-4 py-2 text-sm font-medium`}
       >
-        Skip to Main Content
+        {t('navbar.skipToContent')}
       </button>
 
       {/* Government Header - UX4G Standard */}
@@ -55,11 +55,10 @@ const UX4GHeader = () => {
         <div className="container mx-auto px-4 flex items-center justify-between text-sm">
           <div className="flex items-center space-x-2">
             <img 
-              src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAyNCAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjUuMzMzMzMiIGZpbGw9IiNGRjk5MzMiLz4KPHJlY3QgeT0iNS4zMzMzNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjUuMzMzMzMiIGZpbGw9IiNGRkZGRkYiLz4KPHJlY3QgeT0iMTAuNjY2NyIgd2lkdGg9IjI0IiBoZWlnaHQ9IjUuMzMzMzMiIGZpbGw9IiMxMzhBMzYiLz4KPGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSIyLjY2NjY3IiBmaWxsPSIjMDAwMDgwIi8+Cjwvc3ZnPgo=" 
-              alt="Indian Flag" 
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/2560px-Flag_of_India.svg.png"              alt={t('navbar.indianFlagAlt')} 
               className="w-6 h-4"
             />
-            <span className="font-medium">Government of India</span>
+            <span className="font-medium">{t('navbar.governmentOfIndia')}</span>
           </div>
           <div className="flex items-center space-x-4">
             {/* Font Size Controls - UX4G Accessibility */}
@@ -103,21 +102,21 @@ const Navbar = () => {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   const navItems = user ? [
-    { name: 'Dashboard', path: '/dashboard', icon: Home },
-    { name: 'Upload Data', path: '/upload', icon: User },
-    { name: 'Registry', path: '/registry', icon: Settings },
-    { name: 'Marketplace', path: '/marketplace', icon: Wallet },
-    { name: 'GIS Mapping', path: '/gis-mapping', icon: Settings },
-    { name: 'IoT Sensors', path: '/iot-simulation', icon: Settings },
-    { name: 'Carbon Wallet', path: '/wallet', icon: Wallet },
+    { name: t('navbar.dashboard'), path: '/dashboard', icon: Home },
+    { name: t('navbar.uploadData'), path: '/upload', icon: User },
+    { name: t('navbar.registry'), path: '/registry', icon: Settings },
+    { name: t('navbar.marketplace'), path: '/marketplace', icon: Wallet },
+    { name: t('navbar.gisMapping'), path: '/gis-mapping', icon: Settings },
+    { name: t('navbar.iotSensors'), path: '/iot-simulation', icon: Settings },
+    { name: t('navbar.carbonWallet'), path: '/wallet', icon: Wallet },
   ] : [
-    { name: 'Home', path: '/', icon: Home },
-    { name: 'Registry', path: '/registry', icon: Settings },
+    { name: t('navbar.home'), path: '/', icon: Home },
+    { name: t('navbar.registry'), path: '/registry', icon: Settings },
   ];
 
   // Add admin-specific items
   if (user?.role === 'Admin') {
-    navItems.push({ name: 'Admin Panel', path: '/admin', icon: Settings });
+    navItems.push({ name: t('navbar.adminPanel'), path: '/admin', icon: Settings });
   }
 
   return (
@@ -134,8 +133,8 @@ const Navbar = () => {
                 <span className="text-white font-bold text-lg">BC</span>
               </div>
               <div>
-                <h1 className="font-bold text-lg gradient-text">BlueCarbon MRV</h1>
-                <p className="text-xs text-muted-foreground">National Carbon Credit Registry</p>
+                <h1 className="font-bold text-lg gradient-text">{t('navbar.blueCarbon')}</h1>
+                <p className="text-xs text-muted-foreground">{t('navbar.nationalRegistry')}</p>
               </div>
             </Link>
 
@@ -192,10 +191,10 @@ const Navbar = () => {
               {!user && (
                 <div className="flex space-x-2">
                   <Button variant="ghost" size="sm" onClick={() => navigate('/login')}>
-                    Login
+                    {t('navbar.login')}
                   </Button>
                   <Button size="sm" onClick={() => navigate('/register')}>
-                    Register
+                    {t('navbar.register')}
                   </Button>
                 </div>
               )}

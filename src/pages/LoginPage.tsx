@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Waves, Mail, Lock } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { gsap } from 'gsap';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -15,6 +16,7 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -41,14 +43,14 @@ const LoginPage = () => {
       const success = await login(email, password);
       if (success) {
         toast({
-          title: "Welcome back!",
-          description: "You have been successfully logged in.",
+          title: t('login.welcomeBack'),
+          description: t('login.loginSuccess'),
         });
         navigate('/dashboard');
       } else {
         toast({
-          title: "Login failed",
-          description: "Invalid email or password. Please try again.",
+          title: t('login.loginFailed'),
+          description: t('login.invalidCredentials'),
           variant: "destructive",
         });
       }
@@ -79,8 +81,8 @@ const LoginPage = () => {
             <Waves className="h-10 w-10 text-ocean-deep" />
             <h1 className="text-3xl font-bold gradient-text">BlueCarbon MRV</h1>
           </Link>
-          <h2 className="text-2xl font-bold text-foreground">Welcome back</h2>
-          <p className="text-muted-foreground mt-2">Sign in to your account to continue</p>
+          <h2 className="text-2xl font-bold text-foreground">{t('login.welcomeBack')}</h2>
+          <p className="text-muted-foreground mt-2">{t('login.subtitle')}</p>
         </div>
 
         {/* Login Form */}
@@ -89,7 +91,7 @@ const LoginPage = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-sm font-medium">
-                  Email Address
+                  {t('login.email')}
                 </Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -107,7 +109,7 @@ const LoginPage = () => {
 
               <div className="space-y-2">
                 <Label htmlFor="password" className="text-sm font-medium">
-                  Password
+                  {t('login.password')}
                 </Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -130,15 +132,15 @@ const LoginPage = () => {
                 className="w-full"
                 disabled={isLoading}
               >
-                {isLoading ? 'Signing in...' : 'Sign In'}
+                {isLoading ? t('login.loading') : t('login.loginButton')}
               </Button>
             </form>
 
             <div className="mt-6 text-center">
               <p className="text-sm text-muted-foreground">
-                Don't have an account?{' '}
+                {t('login.noAccount')}{' '}
                 <Link to="/register" className="text-ocean-deep hover:text-ocean-medium font-medium">
-                  Sign up here
+                  {t('login.signUp')}
                 </Link>
               </p>
             </div>

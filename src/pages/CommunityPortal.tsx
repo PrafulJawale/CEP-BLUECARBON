@@ -7,11 +7,13 @@ import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { TreePine, Users, Coins, TrendingUp, Plus, Award } from 'lucide-react';
 import { gsap } from 'gsap';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 const CommunityPortal = () => {
   const { user } = useAuth();
   const { getUserProjects, listCreditsForSale } = useData();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!user) {
@@ -55,10 +57,10 @@ const CommunityPortal = () => {
         <div className="container mt-20 mx-auto">
           <div className="flex items-center space-x-3 mb-2">
             <Users className="h-8 w-8 text-ocean-deep" />
-            <h1 className="text-3xl font-bold gradient-text">Community Portal</h1>
+            <h1 className="text-3xl font-bold gradient-text">{t('common.community')}</h1>
           </div>
           <p className="text-muted-foreground">
-            Welcome {user.username} • {user.role} • {user.organization || 'Independent'}
+            {t('common.welcome')} {user.username} • {user.role} • {user.organization || t('common.independent')}
           </p>
         </div>
       </header>
@@ -75,7 +77,7 @@ const CommunityPortal = () => {
                 </div>
               </div>
               <div className="text-2xl font-bold gradient-text">{userProjects.length}</div>
-              <div className="text-sm text-muted-foreground">Active Projects</div>
+              <div className="text-sm text-muted-foreground">{t('common.activeProjects')}</div>
             </div>
           </Card>
 
@@ -90,7 +92,7 @@ const CommunityPortal = () => {
                 </div>
               </div>
               <div className="text-2xl font-bold gradient-sea-text">{verificationRate.toFixed(0)}%</div>
-              <div className="text-sm text-muted-foreground">Verification Rate</div>
+              <div className="text-sm text-muted-foreground">{t('common.verificationRate')}</div>
             </div>
           </Card>
 
@@ -105,7 +107,7 @@ const CommunityPortal = () => {
               <div className="text-2xl font-bold gradient-text">
                 {userProjects.reduce((sum, p) => sum + p.creditsGenerated, 0)}
               </div>
-              <div className="text-sm text-muted-foreground">Credits Earned</div>
+              <div className="text-sm text-muted-foreground">{t('common.creditsEarned')}</div>
             </div>
           </Card>
 
@@ -118,7 +120,7 @@ const CommunityPortal = () => {
                 </div>
               </div>
               <div className="text-2xl font-bold gradient-sea-text">₹{totalEarnings.toLocaleString()}</div>
-              <div className="text-sm text-muted-foreground">Total Earnings</div>
+              <div className="text-sm text-muted-foreground">{t('common.totalEarnings')}</div>
             </div>
           </Card>
         </div>
@@ -131,8 +133,8 @@ const CommunityPortal = () => {
               <div className="w-16 h-16 bg-gradient-ocean rounded-full flex items-center justify-center mx-auto mb-4">
                 <Plus className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">New Project</h3>
-              <p className="text-muted-foreground text-sm">Start a new blue carbon project</p>
+              <h3 className="text-lg font-semibold mb-2">{t('common.newProject')}</h3>
+              <p className="text-muted-foreground text-sm">{t('common.startNewProject')}</p>
             </div>
           </Card>
 
@@ -142,8 +144,8 @@ const CommunityPortal = () => {
               <div className="w-16 h-16 bg-gradient-sea rounded-full flex items-center justify-center mx-auto mb-4">
                 <Coins className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Sell Credits</h3>
-              <p className="text-muted-foreground text-sm">List your credits in marketplace</p>
+              <h3 className="text-lg font-semibold mb-2">{t('wallet.sellCredits')}</h3>
+              <p className="text-muted-foreground text-sm">{t('common.listCreditsMarketplace')}</p>
             </div>
           </Card>
 
@@ -153,8 +155,8 @@ const CommunityPortal = () => {
               <div className="w-16 h-16 bg-gradient-coral rounded-full flex items-center justify-center mx-auto mb-4">
                 <Award className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">View Registry</h3>
-              <p className="text-muted-foreground text-sm">Browse verified projects</p>
+              <h3 className="text-lg font-semibold mb-2">{t('registry.viewRegistry')}</h3>
+              <p className="text-muted-foreground text-sm">{t('registry.browseVerifiedProjects')}</p>
             </div>
           </Card>
         </div>
@@ -162,16 +164,16 @@ const CommunityPortal = () => {
         {/* My Projects */}
         <Card className="community-card glass-card">
           <div className="p-6">
-            <h3 className="text-xl font-semibold mb-6">My Projects</h3>
+            <h3 className="text-xl font-semibold mb-6">{t('common.myProjects')}</h3>
             
             {userProjects.length === 0 ? (
               <div className="text-center py-12">
                 <TreePine className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                <h4 className="text-lg font-semibold mb-2">No Projects Yet</h4>
-                <p className="text-muted-foreground mb-6">Start by uploading your first blue carbon project</p>
+                <h4 className="text-lg font-semibold mb-2">{t('common.noProjectsYet')}</h4>
+                <p className="text-muted-foreground mb-6">{t('common.startByUploading')}</p>
                 <Button variant="ocean" onClick={() => navigate('/upload')}>
                   <Plus className="h-4 w-4 mr-2" />
-                  Create Project
+                  {t('common.createProject')}
                 </Button>
               </div>
             ) : (
@@ -185,19 +187,19 @@ const CommunityPortal = () => {
                         
                         <div className="grid md:grid-cols-4 gap-4 text-sm">
                           <div>
-                            <span className="text-muted-foreground">Trees Planted:</span>
+                            <span className="text-muted-foreground">{t('common.treesPlanted')}:</span>
                             <div className="font-semibold gradient-sea-text">{project.treeCount.toLocaleString()}</div>
                           </div>
                           <div>
-                            <span className="text-muted-foreground">CO₂ Sequestered:</span>
+                            <span className="text-muted-foreground">{t('common.co2Sequestered')}:</span>
                             <div className="font-semibold gradient-text">{project.co2Sequestered.toFixed(1)}t</div>
                           </div>
                           <div>
-                            <span className="text-muted-foreground">Credits Generated:</span>
+                            <span className="text-muted-foreground">{t('common.creditsGenerated')}:</span>
                             <div className="font-semibold gradient-text">{project.creditsGenerated}</div>
                           </div>
                           <div>
-                            <span className="text-muted-foreground">Estimated Value:</span>
+                            <span className="text-muted-foreground">{t('common.estimatedValue')}:</span>
                             <div className="font-semibold gradient-sea-text">₹{(project.creditsGenerated * 25).toLocaleString()}</div>
                           </div>
                         </div>
@@ -228,7 +230,7 @@ const CommunityPortal = () => {
                     {/* Progress bar for verification */}
                     <div className="mt-4">
                       <div className="flex items-center justify-between text-xs mb-2">
-                        <span className="text-muted-foreground">Project Status</span>
+                        <span className="text-muted-foreground">{t('common.projectStatus')}</span>
                         <span className="text-muted-foreground">
                           {project.status === 'approved' ? '100%' : 
                            project.status === 'pending' ? '60%' : '0%'}

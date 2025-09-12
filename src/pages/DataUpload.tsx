@@ -11,11 +11,13 @@ import { Progress } from '@/components/ui/progress';
 import { Upload, MapPin, Camera, Satellite, Database } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { gsap } from 'gsap';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 const DataUpload = () => {
   const { user } = useAuth();
   const { createProject } = useData();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
@@ -100,15 +102,15 @@ const DataUpload = () => {
       });
 
       toast({
-        title: "Project uploaded successfully!",
-        description: "Your project data has been submitted for verification.",
+        title: t('upload.projectUploaded'),
+        description: t('upload.projectSubmitted'),
       });
 
       navigate('/dashboard');
     } catch (error) {
       toast({
-        title: "Upload failed",
-        description: "An error occurred while uploading your project.",
+        title: t('upload.uploadFailed'),
+        description: t('upload.uploadError'),
         variant: "destructive",
       });
     } finally {
@@ -124,8 +126,8 @@ const DataUpload = () => {
       {/* Header */}
       <header className="glass px-6 py-4">
         <div className="container mt-20 mx-auto">
-          <h1 className="text-2xl font-bold gradient-text">Upload Project Data</h1>
-          <p className="text-muted-foreground">Submit your blue carbon project for verification</p>
+          <h1 className="text-2xl font-bold gradient-text">{t('upload.dataUpload')}</h1>
+          <p className="text-muted-foreground">{t('upload.uploadDescription')}</p>
         </div>
       </header>
 
@@ -136,15 +138,15 @@ const DataUpload = () => {
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-4 flex items-center">
                 <MapPin className="h-5 w-5 mr-2 text-ocean-deep" />
-                Project Information
+                {t('upload.projectInformation')}
               </h3>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Project Name</Label>
+                  <Label htmlFor="name">{t('upload.projectName')}</Label>
                   <Input
                     id="name"
-                    placeholder="e.g., Mangrove Restoration - Sundarbans"
+                    placeholder={t('upload.projectNamePlaceholder')}
                     value={formData.name}
                     onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                     required
@@ -152,10 +154,10 @@ const DataUpload = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
+                  <Label htmlFor="description">{t('upload.projectDescription')}</Label>
                   <Textarea
                     id="description"
-                    placeholder="Describe your project..."
+                    placeholder={t('upload.descriptionPlaceholder')}
                     value={formData.description}
                     onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
                     required
@@ -163,12 +165,12 @@ const DataUpload = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="latitude">Latitude</Label>
+                  <Label htmlFor="latitude">{t('upload.latitude')}</Label>
                   <Input
                     id="latitude"
                     type="number"
                     step="any"
-                    placeholder="e.g., 21.9497"
+                    placeholder={t('upload.latitudePlaceholder')}
                     value={formData.latitude}
                     onChange={(e) => setFormData(prev => ({ ...prev, latitude: e.target.value }))}
                     required
@@ -176,12 +178,12 @@ const DataUpload = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="longitude">Longitude</Label>
+                  <Label htmlFor="longitude">{t('upload.longitude')}</Label>
                   <Input
                     id="longitude"
                     type="number"
                     step="any"
-                    placeholder="e.g., 88.2516"
+                    placeholder={t('upload.longitudePlaceholder')}
                     value={formData.longitude}
                     onChange={(e) => setFormData(prev => ({ ...prev, longitude: e.target.value }))}
                     required
@@ -198,11 +200,11 @@ const DataUpload = () => {
               <div className="p-6">
                 <h3 className="text-lg font-semibold mb-4 flex items-center">
                   <Camera className="h-5 w-5 mr-2 text-ocean-deep" />
-                  Drone Images
+                  {t('upload.droneImages')}
                 </h3>
                 <div className="border-2 border-dashed border-ocean-light rounded-lg p-6 text-center">
                   <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground mb-2">Upload drone imagery</p>
+                  <p className="text-sm text-muted-foreground mb-2">{t('upload.uploadDroneImages')}</p>
                   <Input
                     type="file"
                     multiple
@@ -224,11 +226,11 @@ const DataUpload = () => {
               <div className="p-6">
                 <h3 className="text-lg font-semibold mb-4 flex items-center">
                   <Satellite className="h-5 w-5 mr-2 text-ocean-deep" />
-                  Satellite Data
+                  {t('upload.satelliteData')}
                 </h3>
                 <div className="border-2 border-dashed border-ocean-light rounded-lg p-6 text-center">
                   <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground mb-2">Upload satellite imagery</p>
+                  <p className="text-sm text-muted-foreground mb-2">{t('upload.uploadSatelliteData')}</p>
                   <Input
                     type="file"
                     multiple
@@ -250,11 +252,11 @@ const DataUpload = () => {
               <div className="p-6">
                 <h3 className="text-lg font-semibold mb-4 flex items-center">
                   <Database className="h-5 w-5 mr-2 text-ocean-deep" />
-                  IoT Sensor Data
+                  {t('upload.iotData')}
                 </h3>
                 <div className="border-2 border-dashed border-ocean-light rounded-lg p-6 text-center">
                   <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground mb-2">Upload CSV data files</p>
+                  <p className="text-sm text-muted-foreground mb-2">{t('upload.uploadIoTData')}</p>
                   <Input
                     type="file"
                     multiple
@@ -277,7 +279,7 @@ const DataUpload = () => {
             <Card className="upload-card glass-card">
               <div className="p-6">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium">Uploading...</span>
+                  <span className="text-sm font-medium">{t('upload.uploading')}</span>
                   <span className="text-sm text-muted-foreground">{Math.round(uploadProgress)}%</span>
                 </div>
                 <Progress value={uploadProgress} className="w-full" />
@@ -294,7 +296,7 @@ const DataUpload = () => {
               disabled={isUploading}
               className="min-w-[200px]"
             >
-              {isUploading ? 'Uploading...' : 'Submit Project'}
+              {isUploading ? t('upload.uploading') : t('upload.submitProject')}
             </Button>
           </div>
         </form>

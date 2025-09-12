@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Layers, Satellite, Activity, Home, Zap, ZoomIn, ZoomOut } from 'lucide-react';
 import { gsap } from 'gsap';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 // Simple 3D Map Component (without mapbox for demo)
 const InteractiveMap: React.FC = () => {
@@ -157,6 +158,7 @@ const GISMapping = () => {
   const { user } = useAuth();
   const { projects } = useData();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
 
   useEffect(() => {
@@ -192,13 +194,13 @@ const GISMapping = () => {
               <Home className="h-5 w-5" />
             </Button>
             <div>
-              <h1 className="text-2xl font-bold gradient-text">GIS Mapping</h1>
-              <p className="text-muted-foreground">Geospatial View of Blue Carbon Projects</p>
+              <h1 className="text-2xl font-bold gradient-text">{t('navbar.gisMapping')}</h1>
+              <p className="text-muted-foreground">{t('gis.geospatialView')}</p>
             </div>
           </div>
           <Badge variant="outline" className="bg-ocean-surface">
             <MapPin className="h-4 w-4 mr-2" />
-            {verifiedProjects.length} Active Sites
+            {verifiedProjects.length} {t('common.activeSites')}
           </Badge>
         </div>
       </header>
@@ -209,10 +211,10 @@ const GISMapping = () => {
           <div className="lg:col-span-2">
             <Card className="gis-card glass-card p-6">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-semibold gradient-text">Interactive Map</h3>
+                <h3 className="text-xl font-semibold gradient-text">{t('gis.interactiveMap')}</h3>
                 <div className="flex items-center space-x-2">
                   <Layers className="h-5 w-5 text-ocean-medium" />
-                  <span className="text-sm text-muted-foreground">Multiple Layers</span>
+                  <span className="text-sm text-muted-foreground">{t('gis.multipleLayers')}</span>
                 </div>
               </div>
               
@@ -222,23 +224,23 @@ const GISMapping = () => {
 
               {/* Map Legend */}
               <div className="mt-4 p-4 bg-ocean-surface/20 rounded-lg">
-                <h4 className="font-medium mb-2">Legend</h4>
+                <h4 className="font-medium mb-2">{t('gis.legend')}</h4>
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   <div className="flex items-center space-x-2">
                     <div className="w-4 h-4 bg-sea-green rounded-full"></div>
-                    <span>Restoration Sites</span>
+                    <span>{t('gis.restorationSites')}</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className="w-4 h-4 bg-destructive rounded-full"></div>
-                    <span>Project Centers</span>
+                    <span>{t('gis.projectCenters')}</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className="w-4 h-4 bg-yellow-500 rounded-full"></div>
-                    <span>IoT Sensors</span>
+                    <span>{t('gis.iotSensors')}</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className="w-4 h-4 bg-ocean-medium rounded-full"></div>
-                    <span>Water Bodies</span>
+                    <span>{t('gis.waterBodies')}</span>
                   </div>
                 </div>
               </div>
@@ -248,7 +250,7 @@ const GISMapping = () => {
           {/* Project List */}
           <div className="space-y-6">
             <Card className="gis-card glass-card p-6">
-              <h3 className="text-lg font-semibold mb-4 gradient-text">Active Projects</h3>
+              <h3 className="text-lg font-semibold mb-4 gradient-text">{t('gis.activeProjects')}</h3>
               <div className="space-y-3">
                 {verifiedProjects.slice(0, 5).map((project) => (
                   <div 
@@ -289,29 +291,29 @@ const GISMapping = () => {
                 className="w-full mt-4"
                 onClick={() => navigate('/registry')}
               >
-                View All Projects
+                {t('gis.viewAllProjects')}
               </Button>
             </Card>
 
             <Card className="gis-card glass-card p-6">
-              <h3 className="text-lg font-semibold mb-4 gradient-text">Quick Stats</h3>
+              <h3 className="text-lg font-semibold mb-4 gradient-text">{t('gis.quickStats')}</h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm">Total Area Restored</span>
+                  <span className="text-sm">{t('gis.totalAreaRestored')}</span>
                   <span className="font-semibold">2,450 hectares</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm">CO₂ Sequestered</span>
+                  <span className="text-sm">{t('gis.co2Sequestered')}</span>
                   <span className="font-semibold gradient-sea-text">
                     {verifiedProjects.reduce((sum, p) => sum + p.co2Sequestered, 0).toFixed(1)}t
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm">Active Sensors</span>
+                  <span className="text-sm">{t('gis.activeSensors')}</span>
                   <span className="font-semibold text-yellow-600">24 online</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm">Biodiversity Score</span>
+                  <span className="text-sm">{t('gis.biodiversityScore')}</span>
                   <span className="font-semibold text-sea-green">8.7/10</span>
                 </div>
               </div>
@@ -327,9 +329,9 @@ const GISMapping = () => {
               <div className="w-16 h-16 bg-gradient-coral rounded-full flex items-center justify-center mx-auto mb-4">
                 <Zap className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">IoT Live Data</h3>
+              <h3 className="text-lg font-semibold mb-2">{t('gis.iotLiveData')}</h3>
               <p className="text-muted-foreground text-sm">
-                View real-time sensor data from restoration sites
+                {t('gis.viewRealtimeData')}
               </p>
             </div>
           </Card>
@@ -340,9 +342,9 @@ const GISMapping = () => {
               <div className="w-16 h-16 bg-gradient-sea rounded-full flex items-center justify-center mx-auto mb-4">
                 <Activity className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Analytics Hub</h3>
+              <h3 className="text-lg font-semibold mb-2">{t('gis.analyticsHub')}</h3>
               <p className="text-muted-foreground text-sm">
-                Analyze trends and generate reports
+                {t('gis.analyzeTrends')}
               </p>
             </div>
           </Card>
@@ -353,9 +355,9 @@ const GISMapping = () => {
               <div className="w-16 h-16 bg-gradient-ocean rounded-full flex items-center justify-center mx-auto mb-4">
                 <Layers className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">3D Visualization</h3>
+              <h3 className="text-lg font-semibold mb-2">{t('gis.3dVisualization')}</h3>
               <p className="text-muted-foreground text-sm">
-                Explore projects in immersive 3D view
+                {t('gis.exploreImmersive')}
               </p>
             </div>
           </Card>

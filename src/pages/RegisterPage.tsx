@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Waves, Mail, Lock, User, Building } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { gsap } from 'gsap';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -21,6 +22,7 @@ const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { register, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -42,13 +44,13 @@ const RegisterPage = () => {
       const success = await register(formData);
       if (success) {
         toast({
-          title: "Registration successful!",
-          description: "Your account has been created successfully.",
+          title: t('register.registrationSuccess'),
+          description: t('register.accountCreated'),
         });
         navigate('/dashboard');
       } else {
         toast({
-          title: "Registration failed",
+          title: t('register.registrationFailed'),
           description: "User with this email already exists.",
           variant: "destructive",
         });
@@ -77,8 +79,8 @@ const RegisterPage = () => {
             <Waves className="h-10 w-10 text-ocean-deep" />
             <h1 className="text-3xl font-bold gradient-text">BlueCarbon MRV</h1>
           </Link>
-          <h2 className="text-2xl font-bold text-foreground">Join the Platform</h2>
-          <p className="text-muted-foreground mt-2">Create your account to get started</p>
+          <h2 className="text-2xl font-bold text-foreground">{t('register.title')}</h2>
+          <p className="text-muted-foreground mt-2">{t('register.subtitle')}</p>
         </div>
 
         {/* Register Form */}
@@ -86,7 +88,7 @@ const RegisterPage = () => {
           <div className="p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
+                <Label htmlFor="username">{t('register.username')}</Label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -101,7 +103,7 @@ const RegisterPage = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
+                <Label htmlFor="email">{t('register.email')}</Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -117,7 +119,7 @@ const RegisterPage = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t('register.password')}</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -133,10 +135,10 @@ const RegisterPage = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="role">Role</Label>
+                <Label htmlFor="role">{t('register.role')}</Label>
                 <Select onValueChange={(value) => updateFormData('role', value as UserRole)} required>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select your role" />
+                    <SelectValue placeholder={t('register.selectRole')} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="NGO">NGO</SelectItem>
@@ -149,7 +151,7 @@ const RegisterPage = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="organization">Organization</Label>
+                <Label htmlFor="organization">{t('register.organization')}</Label>
                 <div className="relative">
                   <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -169,15 +171,15 @@ const RegisterPage = () => {
                 className="w-full"
                 disabled={isLoading}
               >
-                {isLoading ? 'Creating Account...' : 'Create Account'}
+                {isLoading ? t('register.loading') : t('register.registerButton')}
               </Button>
             </form>
 
             <div className="mt-6 text-center">
               <p className="text-sm text-muted-foreground">
-                Already have an account?{' '}
+                {t('register.haveAccount')}{' '}
                 <Link to="/login" className="text-ocean-deep hover:text-ocean-medium font-medium">
-                  Sign in here
+                  {t('register.signIn')}
                 </Link>
               </p>
             </div>

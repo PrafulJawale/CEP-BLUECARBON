@@ -97,7 +97,7 @@ const UX4GFooter = () => {
               <span>Powered by:</span>
               <div className="flex items-center space-x-2">
                 <img 
-                  src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAyNCAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjUuMzMzMzMiIGZpbGw9IiNGRjk5MzMiLz4KPHJlY3QgeT0iNS4zMzMzNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjUuMzMzMzMiIGZpbGw9IiNGRkZGRkYiLz4KPHJlY3QgeT0iMTAuNjY2NyIgd2lkdGg9IjI0IiBoZWlnaHQ9IjUuMzMzMzMiIGZpbGw9IiMxMzhBMzYiLz4KPGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSIyLjY2NjY3IiBmaWxsPSIjMDAwMDgwIi8+Cjwvc3ZnPgo=" 
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/2560px-Flag_of_India.svg.png" 
                   alt="Digital India"
                   className="w-6 h-4"
                 />

@@ -147,7 +147,6 @@ const AppNavigation: React.FC<{ className?: string }> = ({ className }) => {
     return (
       <div className={cn("flex items-center", className)}>
         <button
-          aria-expanded={open}
           aria-label="Open navigation"
           onClick={() => setOpen((s) => !s)}
           className="p-2 rounded-md hover:bg-accent/10 text-gray-900"
@@ -156,7 +155,6 @@ const AppNavigation: React.FC<{ className?: string }> = ({ className }) => {
         </button>
 
         <div
-          aria-hidden={!open}
           className={`fixed inset-0 z-[60] transition-opacity duration-200 ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
         >
           {/* backdrop */}
