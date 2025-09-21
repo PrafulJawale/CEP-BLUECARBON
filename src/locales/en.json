@@ -412,5 +412,15 @@
     "seeSensorLocations": "See sensor locations on interactive map",
     "anomalyDetection": "Anomaly Detection",
     "aiPoweredDetection": "AI-powered fraud and anomaly detection"
+  },
+  "pwa": {
+    "installTitle": "Install BlueCarbon MRV",
+    "installDescription": "Add to your home screen for quick access and offline functionality",
+    "install": "Install",
+    "later": "Later",
+    "updateAvailable": "New version available",
+    "updateDescription": "A new version of the app is available. Refresh to update.",
+    "refresh": "Refresh",
+    "dismiss": "Dismiss"
   }
 }
