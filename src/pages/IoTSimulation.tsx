@@ -124,26 +124,27 @@ const IoTSimulation = () => {
 
   return (
     <div className="min-h-screen bg-gradient-surface">
-      {/* Header */}
-      <header className="glass px-6 py-4">
-        <div className="container mt-20 mx-auto flex justify-between items-center">
+      {/* Header - Made mobile-first with vertical stacking on small screens */}
+      <header className="glass px-4 sm:px-6 py-4"> {/* Reduced padding on mobile */}
+        <div className="container mt-20 mx-auto flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4"> {/* Stack vertically on mobile, horizontal on sm+ */}
           <div className="flex items-center space-x-4">
             <Button variant="ghost" onClick={() => navigate('/dashboard')}>
               <Home className="h-5 w-5" />
             </Button>
             <div>
-              <h1 className="text-2xl font-bold gradient-text">{t('navbar.iotSensors')}</h1>
-              <p className="text-muted-foreground">{t('iot.realTimeMonitoring')}</p>
+              <h1 className="text-xl sm:text-2xl font-bold gradient-text">{t('navbar.iotSensors')}</h1> {/* Smaller text on mobile */}
+              <p className="text-sm sm:text-base text-muted-foreground">{t('iot.realTimeMonitoring')}</p> {/* Smaller text on mobile */}
             </div>
           </div>
-          <div className="flex items-center space-x-4">
-            <Badge variant={isSimulating ? "default" : "secondary"} className="bg-sea-green">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4"> {/* Stack vertically on mobile */}
+            <Badge variant={isSimulating ? "default" : "secondary"} className="bg-sea-green self-start sm:self-auto"> {/* Align to start on mobile */}
               <Activity className={`h-4 w-4 mr-2 ${isSimulating ? 'heartbeat' : ''}`} />
               {isSimulating ? t('iot.live') : t('iot.paused')}
             </Badge>
             <Button
               variant={isSimulating ? "destructive" : "ocean"}
               onClick={() => setIsSimulating(!isSimulating)}
+              className="w-full sm:w-auto text-sm sm:text-base" // Full width on mobile, auto on larger; smaller text on mobile
             >
               {isSimulating ? t('iot.stop') : t('iot.start')} {t('iot.simulation')}
             </Button>
@@ -151,15 +152,15 @@ const IoTSimulation = () => {
         </div>
       </header>
 
-      <div className="container mx-auto px-6 py-8">
-        {/* Sensor Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8"> {/* Reduced padding on mobile */}
+        {/* Sensor Grid - Already mobile-first with single column on small screens */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8"> {/* Smaller gaps on mobile */}
           {sensors.map((sensor) => {
             const latestData = getLatestDataBySensor(sensor.id);
             return (
               <Card 
                 key={sensor.id} 
-                className={`iot-card glass-card p-6 cursor-pointer transition-all duration-300 ${
+                className={`iot-card glass-card p-4 sm:p-6 cursor-pointer transition-all duration-300 ${ /* Reduced padding on mobile */
                   selectedSensor === sensor.id 
                     ? 'ring-2 ring-ocean-medium bg-ocean-surface/20' 
                     : 'hover:scale-105'
@@ -168,43 +169,43 @@ const IoTSimulation = () => {
                   selectedSensor === sensor.id ? null : sensor.id
                 )}
               >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-3">
+                <div className="flex items-center justify-between mb-3 sm:mb-4"> {/* Smaller margin on mobile */}
+                  <div className="flex items-center space-x-2 sm:space-x-3"> {/* Smaller space on mobile */}
                     <div className={`w-3 h-3 rounded-full ${
                       sensor.status === 'online' ? 'bg-sea-green heartbeat' :
                       sensor.status === 'offline' ? 'bg-red-500' :
                       'bg-yellow-500'
                     }`} />
-                    <h3 className="font-semibold text-lg">{sensor.name}</h3>
+                    <h3 className="font-semibold text-base sm:text-lg">{sensor.name}</h3> {/* Smaller text on mobile */}
                   </div>
                   {sensor.status === 'online' ? 
-                    <Wifi className="h-5 w-5 text-sea-green" /> :
-                    <WifiOff className="h-5 w-5 text-red-500" />
+                    <Wifi className="h-4 sm:h-5 w-4 sm:w-5 text-sea-green" /> : 
+                    <WifiOff className="h-4 sm:h-5 w-4 sm:w-5 text-red-500" />
                   }
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3"> {/* Smaller space on mobile */}
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">{t('iot.location')}</span>
-                    <span className="text-sm font-medium">
+                    <span className="text-xs sm:text-sm text-muted-foreground">{t('iot.location')}</span> {/* Smaller text on mobile */}
+                    <span className="text-xs sm:text-sm font-medium">
                       {sensor.location.lat.toFixed(4)}, {sensor.location.lng.toFixed(4)}
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <Battery className="h-4 w-4" />
-                      <span className="text-sm">{t('iot.battery')}</span>
+                    <div className="flex items-center space-x-1 sm:space-x-2"> {/* Smaller space on mobile */}
+                      <Battery className="h-3 sm:h-4 w-3 sm:w-4" /> {/* Smaller icon on mobile */}
+                      <span className="text-xs sm:text-sm">{t('iot.battery')}</span>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <Progress value={sensor.batteryLevel} className="w-16" />
-                      <span className="text-sm font-medium">{sensor.batteryLevel}%</span>
+                    <div className="flex items-center space-x-1 sm:space-x-2">
+                      <Progress value={sensor.batteryLevel} className="w-12 sm:w-16" /> {/* Smaller width on mobile */}
+                      <span className="text-xs sm:text-sm font-medium">{sensor.batteryLevel}%</span>
                     </div>
                   </div>
 
                   {latestData && (
-                    <div className="mt-4 pt-4 border-t border-ocean-surface">
-                      <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-ocean-surface"> {/* Smaller margins on mobile */}
+                      <div className="grid grid-cols-2 gap-1 sm:gap-2 text-xs"> {/* Smaller gaps and text on mobile */}
                         <div className="data-update">
                           <span className="text-muted-foreground">{t('iot.temperature')}:</span>
                           <span className={`ml-1 font-medium ${getParameterColor('temperature', latestData.parameters.temperature)}`}>
@@ -242,10 +243,10 @@ const IoTSimulation = () => {
           })}
         </div>
 
-        {/* Detailed Sensor View */}
+        {/* Detailed Sensor View - Already mobile-first */}
         {selectedSensor && (
-          <Card className="iot-card glass-card p-6">
-            <h3 className="text-xl font-semibold mb-6 gradient-text">
+          <Card className="iot-card glass-card p-4 sm:p-6"> {/* Reduced padding on mobile */}
+            <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 gradient-text"> {/* Smaller text on mobile */}
               {t('iot.detailedSensorData')}: {sensors.find(s => s.id === selectedSensor)?.name}
             </h3>
             
@@ -254,21 +255,21 @@ const IoTSimulation = () => {
               if (!latestData) return <p className="text-muted-foreground">{t('iot.noDataAvailable')}</p>;
 
               return (
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"> {/* Single column on mobile */}
                   {Object.entries(latestData.parameters).map(([param, value]) => (
-                    <Card key={param} className="glass-card p-4 data-update">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center space-x-2">
+                    <Card key={param} className="glass-card p-3 sm:p-4 data-update"> {/* Reduced padding on mobile */}
+                      <div className="flex items-center justify-between mb-1 sm:mb-2"> {/* Smaller margin on mobile */}
+                        <div className="flex items-center space-x-1 sm:space-x-2"> {/* Smaller space on mobile */}
                           {getParameterIcon(param)}
-                          <h4 className="font-medium text-sm">{getParameterName(param)}</h4>
+                          <h4 className="font-medium text-xs sm:text-sm">{getParameterName(param)}</h4> {/* Smaller text on mobile */}
                         </div>
                       </div>
                       
-                      <div className={`text-2xl font-bold ${getParameterColor(param, value)}`}>
+                      <div className={`text-xl sm:text-2xl font-bold ${getParameterColor(param, value)}`}> {/* Smaller text on mobile */}
                         {formatParameterValue(param, value)}
                       </div>
                       
-                      <div className="mt-2">
+                      <div className="mt-1 sm:mt-2"> {/* Smaller margin on mobile */}
                         <div className="text-xs text-muted-foreground mb-1">{t('iot.status')}</div>
                         <Badge 
                           variant={getParameterColor(param, value).includes('red') ? 'destructive' : 'default'}
@@ -285,42 +286,42 @@ const IoTSimulation = () => {
           </Card>
         )}
 
-        {/* Quick Actions */}
-        <div className="grid md:grid-cols-3 gap-6 mt-8">
-          <Card className="iot-card glass-card hover:scale-105 transition-transform duration-300 cursor-pointer p-6"
+        {/* Quick Actions - Already mobile-first with single column on small screens */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mt-6 sm:mt-8"> {/* Smaller gaps on mobile */}
+          <Card className="iot-card glass-card hover:scale-105 transition-transform duration-300 cursor-pointer p-4 sm:p-6" /* Reduced padding on mobile */
                 onClick={() => navigate('/analytics')}>
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-ocean rounded-full flex items-center justify-center mx-auto mb-4">
-                <Activity className="h-8 w-8 text-white" />
+              <div className="w-12 sm:w-16 h-12 sm:h-16 bg-gradient-ocean rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4"> {/* Smaller size on mobile */}
+                <Activity className="h-6 sm:h-8 w-6 sm:w-8 text-white" /> {/* Smaller icon on mobile */}
               </div>
-              <h3 className="text-lg font-semibold mb-2">{t('iot.historicalData')}</h3>
-              <p className="text-muted-foreground text-sm">
+              <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2">{t('iot.historicalData')}</h3> {/* Smaller text on mobile */}
+              <p className="text-muted-foreground text-xs sm:text-sm"> {/* Smaller text on mobile */}
                 {t('iot.viewTrends')}
               </p>
             </div>
           </Card>
 
-          <Card className="iot-card glass-card hover:scale-105 transition-transform duration-300 cursor-pointer p-6"
+          <Card className="iot-card glass-card hover:scale-105 transition-transform duration-300 cursor-pointer p-4 sm:p-6" /* Reduced padding on mobile */
                 onClick={() => navigate('/gis-mapping')}>
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-sea rounded-full flex items-center justify-center mx-auto mb-4">
-                <Zap className="h-8 w-8 text-white" />
+              <div className="w-12 sm:w-16 h-12 sm:h-16 bg-gradient-sea rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4"> {/* Smaller size on mobile */}
+                <Zap className="h-6 sm:h-8 w-6 sm:w-8 text-white" /> {/* Smaller icon on mobile */}
               </div>
-              <h3 className="text-lg font-semibold mb-2">{t('iot.mapView')}</h3>
-              <p className="text-muted-foreground text-sm">
+              <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2">{t('iot.mapView')}</h3> {/* Smaller text on mobile */}
+              <p className="text-muted-foreground text-xs sm:text-sm"> {/* Smaller text on mobile */}
                 {t('iot.seeSensorLocations')}
               </p>
             </div>
           </Card>
 
-          <Card className="iot-card glass-card hover:scale-105 transition-transform duration-300 cursor-pointer p-6"
+          <Card className="iot-card glass-card hover:scale-105 transition-transform duration-300 cursor-pointer p-4 sm:p-6" /* Reduced padding on mobile */
                 onClick={() => navigate('/fraud-detection')}>
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-coral rounded-full flex items-center justify-center mx-auto mb-4">
-                <Eye className="h-8 w-8 text-white" />
+              <div className="w-12 sm:w-16 h-12 sm:h-16 bg-gradient-coral rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4"> {/* Smaller size on mobile */}
+                <Eye className="h-6 sm:h-8 w-6 sm:w-8 text-white" /> {/* Smaller icon on mobile */}
               </div>
-              <h3 className="text-lg font-semibold mb-2">{t('iot.anomalyDetection')}</h3>
-              <p className="text-muted-foreground text-sm">
+              <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2">{t('iot.anomalyDetection')}</h3> {/* Smaller text on mobile */}
+              <p className="text-muted-foreground text-xs sm:text-sm"> {/* Smaller text on mobile */}
                 {t('iot.aiPoweredDetection')}
               </p>
             </div>
