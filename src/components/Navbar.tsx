@@ -172,9 +172,11 @@ const Navbar = () => {
           <div className="flex justify-between items-center h-14 sm:h-16">
             {/* Logo - Mobile Optimized */}
             <Link to="/" className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-shrink">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-ocean rounded-lg flex items-center justify-center flex-shrink-0">
-                <span className="text-white font-bold text-sm sm:text-lg">BC</span>
-              </div>
+              <img
+                src="/c6.png"
+                alt={t('navbar.logoAlt') || 'Blue Carbon Logo'}
+                className="w-8 h-8 sm:w-10 sm:h-10 object-cover rounded-lg flex-shrink-0"
+              />
               <div className="min-w-0">
                 <h1 className="font-bold text-sm sm:text-lg gradient-text truncate">{t('navbar.blueCarbon')}</h1>
                 <p className="text-xs text-muted-foreground truncate hidden sm:block">{t('navbar.nationalRegistry')}</p>
