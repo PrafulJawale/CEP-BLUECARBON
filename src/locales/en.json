@@ -79,6 +79,13 @@
     "govCertified": "Government of India Certified",
     "title": "BlueCarbon MRV Platform",
     "subtitle": "National Carbon Credit Registry (NCCR) for Blue Carbon Projects - Mangroves, Seagrass & Coastal Ecosystem Restoration",
+    "hero": {
+      "title": "BlueCarbon MRV Platform",
+      "subtitle": "National Carbon Credit Registry (NCCR) for Blue Carbon Projects - Monitoring, Reporting & Verification",
+      "getStarted": "Get Started",
+      "exploreRegistry": "Explore Registry",
+      "govInitiative": "Government of India Certified"
+    },
     "governmentVerified": "Government Verified",
     "blockchainSecured": "Blockchain Secured",
     "realTimeMonitoring": "Real-time Monitoring",

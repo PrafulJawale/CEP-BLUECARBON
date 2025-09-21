@@ -70,27 +70,27 @@ const LandingPage = () => {
       </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-8 sm:py-16">
         {/* Animated Background Waves */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="wave absolute w-96 h-96 bg-gradient-ocean rounded-full opacity-20 -top-48 -left-48"></div>
-          <div className="wave absolute w-72 h-72 bg-gradient-sea rounded-full opacity-30 top-32 right-0"></div>
-          <div className="wave absolute w-80 h-80 bg-gradient-coral rounded-full opacity-25 bottom-0 left-1/4"></div>
+          <div className="wave absolute w-48 h-48 sm:w-96 sm:h-96 bg-gradient-ocean rounded-full opacity-20 -top-24 sm:-top-48 -left-24 sm:-left-48"></div>
+          <div className="wave absolute w-36 h-36 sm:w-72 sm:h-72 bg-gradient-sea rounded-full opacity-30 top-16 sm:top-32 right-0"></div>
+          <div className="wave absolute w-40 h-40 sm:w-80 sm:h-80 bg-gradient-coral rounded-full opacity-25 bottom-0 left-1/4"></div>
         </div>
 
-        <div className="relative z-10 container mx-auto px-6 text-center">
-          <div className="mb-6">
-            <div className="inline-flex items-center px-4 py-2 bg-sea-green/10 text-sea-green rounded-full text-sm font-medium mb-6">
-              <CheckCircle className="h-4 w-4 mr-2" />
-              Government of India Certified
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 text-center">
+          <div className="mb-4 sm:mb-6">
+            <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-sea-green/10 text-sea-green rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+              <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-2 flex-shrink-0" />
+              <span>{t('landing.hero.govInitiative')}</span>
             </div>
           </div>
           
-          <h1 className="hero-title text-4xl md:text-6xl font-bold gradient-text mb-6">
-            {t('landing.title')}
+          <h1 className="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold gradient-text mb-4 sm:mb-6 leading-tight px-2">
+            {t('landing.hero.title')}
           </h1>
-          <h2 className="hero-subtitle text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-            {t('landing.subtitle')}
+          <h2 className="hero-subtitle text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl lg:max-w-3xl mx-auto leading-relaxed px-4">
+            {t('landing.hero.subtitle')}
           </h2>
           
           {/* Key Benefits - UX4G Pattern */}

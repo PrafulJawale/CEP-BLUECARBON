@@ -4,19 +4,19 @@ import { TreePine, Shield, Globe, Mail, Phone, MapPin } from 'lucide-react';
 
 const UX4GFooter = () => {
   return (
-    <footer className="bg-muted border-t border-border">
+    <footer className="bg-muted border-t border-border mt-auto">
       {/* Main Footer Content */}
-      <div className="container mx-auto px-6 py-12">
-        <div className="grid md:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {/* Organization Info */}
-          <div className="md:col-span-2">
+          <div className="sm:col-span-2 lg:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-ocean rounded-lg flex items-center justify-center">
-                <TreePine className="h-6 w-6 text-white" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-ocean rounded-lg flex items-center justify-center flex-shrink-0">
+                <TreePine className="h-4 w-4 sm:h-6 sm:w-6 text-white" />
               </div>
-              <div>
-                <h3 className="font-bold text-lg gradient-text">BlueCarbon MRV</h3>
-                <p className="text-sm text-muted-foreground">National Carbon Credit Registry</p>
+              <div className="min-w-0">
+                <h3 className="font-bold text-base sm:text-lg gradient-text">BlueCarbon MRV</h3>
+                <p className="text-xs sm:text-sm text-muted-foreground">National Carbon Credit Registry</p>
               </div>
             </div>
             <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
