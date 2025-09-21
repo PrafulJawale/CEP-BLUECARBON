@@ -30,6 +30,7 @@ import Navbar from '@/components/Navbar';
 import UX4GFooter from '@/components/UX4GFooter';
 import PWAInstallPrompt from '@/components/PWAInstallPrompt';
 import MobileWidget from '@/components/MobileWidget';
+import ScrollToTop from '@/components/ScrollToTop';
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ const App = () => (
                     <BrowserRouter>
                       <div className="min-h-screen flex flex-col">
                         <Navbar />
+                        <ScrollToTop />
                         <main className="flex-1">
                           <Routes>
                             <Route path="/" element={<LandingPage />} />
