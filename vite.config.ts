@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => ({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: 'BlueCarbon MRV - National Carbon Credit Registry',
+        name: 'KARBON - BlueCarbon MRV -National Carbon Credit Registry',
         short_name: 'BlueCarbon MRV',
         description: 'Government of India\'s National Carbon Credit Registry for Blue Carbon Projects - Monitoring, Reporting & Verification',
         theme_color: '#2563eb',
@@ -26,56 +26,72 @@ export default defineConfig(({ mode }) => ({
         start_url: '/',
         icons: [
           {
-            src: 'icon-192x192.png',
+            src: 'c6.png',
             sizes: '192x192',
-            type: 'image/png',
-            purpose: 'any maskable'
+            type: 'image/png'
           },
           {
-            src: 'icon-512x512.png',
+            src: 'c6.png',
             sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable'
-          },
-          {
-            src: 'icon-144x144.png',
-            sizes: '144x144',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: 'icon-96x96.png',
-            sizes: '96x96',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: 'icon-72x72.png',
-            sizes: '72x72',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: 'icon-48x48.png',
-            sizes: '48x48',
-            type: 'image/png',
-            purpose: 'any'
+            type: 'image/png'
           }
-        ]
-      },
-      workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
-        runtimeCaching: [
+        ],
+        shortcuts: [
           {
-            urlPattern: /^https:\/\/api\.mapbox\.com\/.*$/,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'mapbox-cache',
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
-              }
-            }
+            name: 'Dashboard',
+            short_name: 'Dashboard',
+            description: 'View your carbon credit dashboard',
+            url: '/dashboard',
+            icons: [{ src: 'c6.png', sizes: '96x96' }]
+          },
+          {
+            name: 'Upload Project',
+            short_name: 'Upload',
+            description: 'Upload a new restoration project',
+            url: '/upload',
+            icons: [{ src: 'c6.png', sizes: '96x96' }]
+          },
+          {
+            name: 'Registry',
+            short_name: 'Registry',
+            description: 'Browse verified carbon projects',
+            url: '/registry',
+            icons: [{ src: 'c6.png', sizes: '96x96' }]
+          },
+          {
+            name: 'Marketplace',
+            short_name: 'Market',
+            description: 'Buy and sell carbon credits',
+            url: '/marketplace',
+            icons: [{ src: 'c6.png', sizes: '96x96' }]
+          },
+          {
+            name: 'GIS Mapping',
+            short_name: 'GIS',
+            description: 'Explore project locations and data',
+            url: '/gis-mapping',
+            icons: [{ src: 'c6.png', sizes: '96x96' }]
+          },
+          {
+            name: 'Carbon Wallet',
+            short_name: 'Wallet',
+            description: 'Manage your carbon credits',
+            url: '/wallet',
+            icons: [{ src: 'c6.png', sizes: '96x96' }]
+          },
+          {
+            name: 'IoT Sensors',
+            short_name: 'IoT',
+            description: 'Monitor IoT sensor data',
+            url: '/iot-simulation',
+            icons: [{ src: 'c6.png', sizes: '96x96' }]
+          },
+          {
+            name: 'Analytics',
+            short_name: 'Analytics',
+            description: 'View detailed analytics and reports',
+            url: '/analytics',
+            icons: [{ src: 'c6.png', sizes: '96x96' }]
           }
         ]
       }

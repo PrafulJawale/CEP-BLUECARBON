@@ -62,7 +62,7 @@
   "navbar": {
     "skipToContent": "Skip to Main Content",
     "governmentOfIndia": "Government of India",
-    "blueCarbon": "BlueCarbon MRV",
+    "blueCarbon": "Kārban",
     "nationalRegistry": "National Carbon Credit Registry",
     "uploadData": "Upload Data",
     "gisMapping": "GIS Mapping",
@@ -317,7 +317,7 @@
     "loading": "Creating account..."
   },
   "footer": {
-    "blueCarbon": "BlueCarbon MRV",
+    "blueCarbon": "Kārban",
     "nationalRegistry": "National Carbon Credit Registry",
     "description": "An initiative by the Ministry of Environment, Forest and Climate Change, Government of India, designed to monitor, report, and verify blue carbon projects across India's coastal ecosystems.",
     "govCertified": "Govt. Certified",
@@ -378,7 +378,7 @@
       "adminPanel": "Admin Panel",
       "login": "Login",
       "register": "Register",
-      "blueCarbon": "BlueCarbon MRV",
+      "blueCarbon": "Kārban",
       "nationalRegistry": "National Carbon Credit Registry",
       "governmentOfIndia": "Government of India",
       "indianFlagAlt": "Indian Flag",
@@ -414,7 +414,7 @@
     "aiPoweredDetection": "AI-powered fraud and anomaly detection"
   },
   "pwa": {
-    "installTitle": "Install BlueCarbon MRV",
+    "installTitle": "Install LARBON - BlueCarbon MRV",
     "installDescription": "Add to your home screen for quick access and offline functionality",
     "install": "Install",
     "later": "Later",

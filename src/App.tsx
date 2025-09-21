@@ -29,6 +29,7 @@ import type { UserRole } from '@/contexts/AuthContext';
 import Navbar from '@/components/Navbar';
 import UX4GFooter from '@/components/UX4GFooter';
 import PWAInstallPrompt from '@/components/PWAInstallPrompt';
+import MobileWidget from '@/components/MobileWidget';
 
 const queryClient = new QueryClient();
 
@@ -42,44 +43,43 @@ const App = () => (
               <IoTProvider>
                 <ForumProvider>
                   <GameificationProvider>
-                  <BrowserRouter>
-                    <div className="min-h-screen flex flex-col">
-                      <Navbar />
-                      <main className="flex-1">
-                        <Routes>
-                          <Route path="/" element={<LandingPage />} />
-                          <Route path="/login" element={<LoginPage />} />
-                          <Route path="/register" element={<RegisterPage />} />
+                    <BrowserRouter>
+                      <div className="min-h-screen flex flex-col">
+                        <Navbar />
+                        <main className="flex-1">
+                          <Routes>
+                            <Route path="/" element={<LandingPage />} />
+                            <Route path="/login" element={<LoginPage />} />
+                            <Route path="/register" element={<RegisterPage />} />
 
-                          {/* Authenticated routes */}
-                          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                          <Route path="/upload" element={<ProtectedRoute><DataUpload /></ProtectedRoute>} />
-                          <Route path="/registry" element={<ProtectedRoute><Registry /></ProtectedRoute>} />
-                          <Route path="/marketplace" element={<ProtectedRoute><Marketplace /></ProtectedRoute>} />
-                          <Route path="/wallet" element={<ProtectedRoute><CarbonWallet /></ProtectedRoute>} />
+                            {/* Authenticated routes */}
+                            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                            <Route path="/upload" element={<ProtectedRoute><DataUpload /></ProtectedRoute>} />
+                            <Route path="/registry" element={<ProtectedRoute><Registry /></ProtectedRoute>} />
+                            <Route path="/marketplace" element={<ProtectedRoute><Marketplace /></ProtectedRoute>} />
+                            <Route path="/wallet" element={<ProtectedRoute><CarbonWallet /></ProtectedRoute>} />
 
-                          {/* Admin-only */}
-                          <Route path="/admin" element={<RoleRoute allowed={["Admin"] as UserRole[]}><AdminPanel /></RoleRoute>} />
+                            {/* Admin-only */}
+                            <Route path="/admin" element={<RoleRoute allowed={["Admin"] as UserRole[]}><AdminPanel /></RoleRoute>} />
 
-                          <Route path="/community" element={<CommunityPortal />} />
-                          <Route path="/gis-mapping" element={<GISMapping />} />
-                          <Route path="/iot-simulation" element={<IoTSimulation />} />
+                            <Route path="/community" element={<CommunityPortal />} />
+                            <Route path="/gis-mapping" element={<GISMapping />} />
+                            <Route path="/iot-simulation" element={<IoTSimulation />} />
 
-                          {/* Verification workflow: admin and govt officer */}
-                          <Route
-                            path="/verification-workflow"
-                            element={<RoleRoute allowed={["Admin", "Govt Officer"] as UserRole[]}><VerificationWorkflow /></RoleRoute>}
-                          />
+                            {/* Verification workflow: admin and govt officer */}
+                            <Route
+                              path="/verification-workflow"
+                              element={<RoleRoute allowed={["Admin", "Govt Officer"] as UserRole[]}><VerificationWorkflow /></RoleRoute>}
+                            />
 
-                          <Route path="*" element={<NotFound />} />
-                        </Routes>
-                      </main>
-                      <UX4GFooter />
-                    </div>
-                    <PWAInstallPrompt />
-                    <Toaster />
-                    <Sonner />
-                  </BrowserRouter>
+                            <Route path="*" element={<NotFound />} />
+                          </Routes>
+                        </main>
+                        <UX4GFooter />
+                        <PWAInstallPrompt />
+                        <MobileWidget />
+                      </div>
+                    </BrowserRouter>
                   </GameificationProvider>
                 </ForumProvider>
               </IoTProvider>
