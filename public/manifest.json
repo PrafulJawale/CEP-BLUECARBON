@@ -1,7 +1,7 @@
 {
-  "name": "KARBON - BlueCarbon MRV -National Carbon Credit Registry",
+  "name": "Kārban - BlueCarbon MRV",
   "short_name": "BlueCarbon MRV",
-  "description": "Government of India's National Carbon Credit Registry for Blue Carbon Projects - Monitoring, Reporting & Verification",
+  "description": "BlueCarbon MRV - Monitoring, Reporting & Verification platform for coastal and mangrove restoration projects.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a4d68",
@@ -9,7 +9,7 @@
   "orientation": "portrait-primary",
   "scope": "/",
   "lang": "en",
-  "categories": ["government", "environment", "productivity"],
+  "categories": ["environment", "productivity"],
   "icons": [
     {
       "src": "/icon-192x192.png",
@@ -54,48 +54,28 @@
       "short_name": "Upload",
       "description": "Upload new blue carbon project data",
       "url": "/upload",
-      "icons": [
-        {
-          "src": "/icon-96x96.png",
-          "sizes": "96x96"
-        }
-      ]
+      "icons": [{ "src": "/icon-96x96.png", "sizes": "96x96" }]
     },
     {
       "name": "Dashboard",
       "short_name": "Dashboard",
       "description": "View your project dashboard",
       "url": "/dashboard",
-      "icons": [
-        {
-          "src": "/icon-96x96.png",
-          "sizes": "96x96"
-        }
-      ]
+      "icons": [{ "src": "/icon-96x96.png", "sizes": "96x96" }]
     },
     {
       "name": "Registry",
       "short_name": "Registry",
       "description": "Browse verified carbon credit projects",
       "url": "/registry",
-      "icons": [
-        {
-          "src": "/icon-96x96.png",
-          "sizes": "96x96"
-        }
-      ]
+      "icons": [{ "src": "/icon-96x96.png", "sizes": "96x96" }]
     },
     {
       "name": "Marketplace",
       "short_name": "Marketplace",
       "description": "Trade carbon credits",
       "url": "/marketplace",
-      "icons": [
-        {
-          "src": "/icon-96x96.png",
-          "sizes": "96x96"
-        }
-      ]
+      "icons": [{ "src": "/icon-96x96.png", "sizes": "96x96" }]
     }
   ],
   "prefer_related_applications": false,

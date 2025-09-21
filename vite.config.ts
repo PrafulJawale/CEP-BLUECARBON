@@ -15,9 +15,10 @@ export default defineConfig(({ mode }) => ({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: 'KARBON - BlueCarbon MRV -National Carbon Credit Registry',
+        // ✅ Cleaned name/description
+        name: 'Kārban - BlueCarbon MRV',
         short_name: 'BlueCarbon MRV',
-        description: 'Government of India\'s National Carbon Credit Registry for Blue Carbon Projects - Monitoring, Reporting & Verification',
+        description: 'BlueCarbon MRV - Monitoring, Reporting & Verification platform for coastal and mangrove restoration projects.',
         theme_color: '#2563eb',
         background_color: '#0a4d68',
         display: 'standalone',
@@ -28,12 +29,14 @@ export default defineConfig(({ mode }) => ({
           {
             src: 'c6.png',
             sizes: '192x192',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any maskable'
           },
           {
             src: 'c6.png',
             sizes: '512x512',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any maskable'
           }
         ],
         shortcuts: [
