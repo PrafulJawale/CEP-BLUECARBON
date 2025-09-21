@@ -45,7 +45,7 @@ const PWAInstallPrompt = () => {
       if (!isStandalone) {
         setTimeout(() => {
           setShowInstallPrompt(true);
-        }, 30000); // Show after 30 seconds
+        }, 5000); // Show after 5 seconds
       }
     };
 
