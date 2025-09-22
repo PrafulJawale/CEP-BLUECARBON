@@ -149,8 +149,12 @@ const LoginPage = () => {
             <div className="mt-6 p-4 bg-ocean-surface/20 rounded-lg">
               <p className="text-xs text-muted-foreground mb-2">Demo Credentials:</p>
               <div className="text-xs space-y-1">
-                <div>Admin: admin@nccr.gov.in / admin123</div>
-                <div>NGO: ngo@example.org / ngo123</div>
+                <div>Admin: admin@karban.in / admin123</div>
+                <div>NGO: ngo@karban.in / ngo123</div>
+                <div>Panchayat: panchayat@karban.in / panchayat123</div>
+                <div>Researcher: researcher@karban.in / researcher123</div>
+                <div>Buyer: buyer@karban.in / buyer123</div>
+                <div>Gov Admin: govadmin@karban.in / govadmin123</div>
               </div>
             </div>
           </div>

@@ -268,6 +268,7 @@
     "lastUpdated": "अंतिम अपडेट"
   },  
     "navbar": {
+      "organization": "Kārban Platform",
       "home": "होम",
       "dashboard": "डैशबोर्ड",
       "uploadData": "डेटा अपलोड करें",
@@ -281,7 +282,7 @@
       "register": "रजिस्टर",
       "blueCarbon": "कार्बन",
       "nationalRegistry": "राष्ट्रीय कार्बन क्रेडिट रजिस्ट्री",
-      "governmentOfIndia": "भारत सरकार",
+      "governmentOfIndia": "karban",
       "indianFlagAlt": "भारतीय ध्वज",
       "skipToContent": "मुख्य सामग्री पर जाएं",
       "language": "भाषा"

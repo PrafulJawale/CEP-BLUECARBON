@@ -305,7 +305,7 @@
     "organization": "Organization",
     "selectRole": "Select your role",
     "ngo": "NGO/Project Developer",
-    "govtOfficer": "Government Officer",
+    "govtOfficer": "ADMIN Officer",
     "buyer": "Carbon Buyer",
     "registerButton": "Create Account",
     "haveAccount": "Already have an account?",
@@ -367,6 +367,7 @@
     "exploreImmersive": "Explore projects in immersive 3D view"
   },
     "navbar": {
+      "organization": "Kārban Platform",
       "home": "Home",
       "dashboard": "Dashboard",
       "uploadData": "Upload Data",
@@ -380,7 +381,7 @@
       "register": "Register",
       "blueCarbon": "Kārban",
       "nationalRegistry": "National Carbon Credit Registry",
-      "governmentOfIndia": "Government of India",
+      "governmentOfIndia": "KARBAN",
       "indianFlagAlt": "Indian Flag",
       "skipToContent": "Skip to Main Content",
       "language": "Language",

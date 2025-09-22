@@ -143,7 +143,7 @@ const RegisterPage = () => {
                   <SelectContent>
                     <SelectItem value="NGO">NGO</SelectItem>
                     <SelectItem value="Panchayat">Panchayat</SelectItem>
-                    <SelectItem value="Govt Officer">Government Officer</SelectItem>
+                    <SelectItem value="Govt Officer">ADMIN Officer</SelectItem>
                     <SelectItem value="Researcher">Researcher</SelectItem>
                     <SelectItem value="Buyer">Credit Buyer</SelectItem>
                   </SelectContent>
