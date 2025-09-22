@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { TreePine, Shield, Globe, Mail, Phone, MapPin } from 'lucide-react';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 const UX4GFooter = () => {
+  const { t } = useTranslation();
   return (
     <footer className="bg-muted border-t border-border mt-auto">
       {/* Main Footer Content */}
@@ -15,64 +17,62 @@ const UX4GFooter = () => {
                 <TreePine className="h-4 w-4 sm:h-6 sm:w-6 text-white" />
               </div>
               <div className="min-w-0">
-                <h3 className="font-bold text-base sm:text-lg gradient-text">BlueCarbon MRV</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">National Carbon Credit Registry</p>
+                <h3 className="font-bold text-base sm:text-lg gradient-text">{t('footer.blueCarbon')}</h3>
+                <p className="text-xs sm:text-sm text-muted-foreground">{t('footer.nationalRegistry')}</p>
               </div>
             </div>
             <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
-              An initiative by the Ministry of Environment, Forest and Climate Change, 
-              Government of India, designed to monitor, report, and verify blue carbon 
-              projects across India's coastal ecosystems.
+              {t('footer.description')}
             </p>
             
-            {/* Government Credentials */}
+            {/* Platform Credentials */}
             <div className="flex items-center space-x-4 text-xs text-muted-foreground">
               <div className="flex items-center">
                 <Shield className="h-3 w-3 mr-1" />
-                <span>Govt. Certified</span>
+                <span>{t('footer.certified')}</span>
               </div>
               <div className="flex items-center">
                 <Globe className="h-3 w-3 mr-1" />
-                <span>Digital India</span>
+                <span>{t('footer.technology')}</span>
               </div>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
+            <h4 className="font-semibold mb-4">{t('footer.quickLinks')}</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/registry" className="text-muted-foreground hover:text-primary transition-colors">Project Registry</Link></li>
-              <li><Link to="/marketplace" className="text-muted-foreground hover:text-primary transition-colors">Carbon Marketplace</Link></li>
-              <li><Link to="/upload" className="text-muted-foreground hover:text-primary transition-colors">Upload Project</Link></li>
-              <li><Link to="/gis" className="text-muted-foreground hover:text-primary transition-colors">GIS Mapping</Link></li>
-              <li><Link to="/iot" className="text-muted-foreground hover:text-primary transition-colors">IoT Monitoring</Link></li>
+              <li><Link to="/registry" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.projectRegistry')}</Link></li>
+              <li><Link to="/marketplace" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.carbonMarketplace')}</Link></li>
+              <li><Link to="/upload" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.uploadProject')}</Link></li>
+              <li><Link to="/gis" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.gisMapping')}</Link></li>
+              <li><Link to="/iot" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.iotMonitoring')}</Link></li>
             </ul>
           </div>
 
           {/* Support */}
           <div>
-            <h4 className="font-semibold mb-4">Support & Contact</h4>
+            <h4 className="font-semibold mb-4">{t('footer.supportContact')}</h4>
             <div className="space-y-3 text-sm">
               <div className="flex items-start space-x-2 text-muted-foreground">
                 <Mail className="h-4 w-4 mt-0.5 text-primary" />
                 <div>
-                  <p>support@bluecarbon.gov.in</p>
-                  <p className="text-xs">General Inquiries</p>
+                  <p>support@karban.example.com</p>
+                  <p className="text-xs">{t('footer.generalInquiries')}</p>
                 </div>
               </div>
               <div className="flex items-start space-x-2 text-muted-foreground">
                 <Phone className="h-4 w-4 mt-0.5 text-primary" />
                 <div>
-                  <p>1800-XXX-XXXX</p>
-                  <p className="text-xs">Toll Free Helpline</p>
+                  <p>+1-XXX-XXX-XXXX</p>
+                  <p className="text-xs">Support Helpline</p>
                 </div>
               </div>
               <div className="flex items-start space-x-2 text-muted-foreground">
                 <MapPin className="h-4 w-4 mt-0.5 text-primary" />
                 <div>
-                  <p>Ministry of Environment</p>
-                  <p className="text-xs">New Delhi, India</p>
+                  <p>{t('footer.organization')}</p>
+                  <p className="text-xs">{t('footer.location')}</p>
                 </div>
               </div>
             </div>
@@ -80,28 +80,23 @@ const UX4GFooter = () => {
         </div>
       </div>
 
-      {/* Government Footer - UX4G Standard */}
+      {/* Platform Footer */}
       <div className="bg-primary text-primary-foreground">
         <div className="container mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6 text-sm">
-              <p>&copy; 2024 Government of India. All rights reserved.</p>
+              <p>{t('footer.copyright')}</p>
               <div className="flex space-x-4">
-                <Link to="/privacy" className="hover:underline">Privacy Policy</Link>
-                <Link to="/terms" className="hover:underline">Terms of Service</Link>
-                <Link to="/accessibility" className="hover:underline">Accessibility</Link>
+                <Link to="/privacy" className="hover:underline">{t('footer.privacyPolicy')}</Link>
+                <Link to="/terms" className="hover:underline">{t('footer.termsOfService')}</Link>
+                <Link to="/accessibility" className="hover:underline">{t('footer.accessibility')}</Link>
               </div>
             </div>
             
             <div className="flex items-center space-x-4 text-sm">
-              <span>Powered by:</span>
+              <span>{t('footer.poweredBy')}</span>
               <div className="flex items-center space-x-2">
-                <img 
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/2560px-Flag_of_India.svg.png" 
-                  alt="Digital India"
-                  className="w-6 h-4"
-                />
-                <span className="font-medium">Digital India</span>
+                <span className="font-medium">{t('footer.technology')}</span>
               </div>
             </div>
           </div>
@@ -113,13 +108,13 @@ const UX4GFooter = () => {
         <div className="container mx-auto px-6 py-3">
           <div className="flex flex-col md:flex-row justify-between items-center text-xs text-muted-foreground">
             <div className="flex items-center space-x-4">
-              <span>Accessibility Options:</span>
-              <button className="hover:text-primary">Screen Reader</button>
-              <button className="hover:text-primary">High Contrast</button>
-              <button className="hover:text-primary">Large Text</button>
+              <span>{t('footer.accessibilityOptions')}</span>
+              <button className="hover:text-primary">{t('footer.screenReader')}</button>
+              <button className="hover:text-primary">{t('footer.highContrast')}</button>
+              <button className="hover:text-primary">{t('footer.largeText')}</button>
             </div>
             <div className="mt-2 md:mt-0">
-              <span>Last Updated: {new Date().toLocaleDateString('en-IN')}</span>
+              <span>{t('footer.lastUpdated')}: {new Date().toLocaleDateString('en-US')}</span>
             </div>
           </div>
         </div>

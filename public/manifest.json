@@ -1,7 +1,7 @@
 {
-  "name": "Kārban - BlueCarbon MRV",
-  "short_name": "BlueCarbon MRV",
-  "description": "BlueCarbon MRV - Monitoring, Reporting & Verification platform for coastal and mangrove restoration projects.",
+  "name": "Kārban - Professional Carbon Platform",
+  "short_name": "Kārban",
+  "description": "Professional monitoring, reporting & verification platform for coastal and mangrove restoration projects worldwide.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a4d68",

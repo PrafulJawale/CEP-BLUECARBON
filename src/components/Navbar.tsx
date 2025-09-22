@@ -50,19 +50,14 @@ const UX4GHeader = () => {
         {t('navbar.skipToContent')}
       </button>
 
-      {/* Government Header - UX4G Standard */}
-      <div className="bg-orange-500 text-white py-2 sm:py-1">
+      {/* Platform Header */}
+      <div className="bg-primary text-primary-foreground py-2 sm:py-1">
         <div className="container mx-auto px-2 sm:px-4">
           {/* Mobile Layout - Stacked */}
           <div className="flex flex-col space-y-2 sm:hidden">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <img 
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/2560px-Flag_of_India.svg.png"
-                  alt={t('navbar.indianFlagAlt')} 
-                  className="w-5 h-3 sm:w-6 sm:h-4"
-                />
-                <span className="font-medium text-xs truncate">{t('navbar.governmentOfIndia')}</span>
+                <span className="font-medium text-xs truncate">{t('navbar.organization')}</span>
               </div>
               <LanguageSwitcher />
             </div>
@@ -95,12 +90,7 @@ const UX4GHeader = () => {
           {/* Desktop Layout - Side by Side */}
           <div className="hidden sm:flex items-center justify-between text-sm">
             <div className="flex items-center space-x-2">
-              <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/2560px-Flag_of_India.svg.png"
-                alt={t('navbar.indianFlagAlt')} 
-                className="w-6 h-4"
-              />
-              <span className="font-medium">{t('navbar.governmentOfIndia')}</span>
+              <span className="font-medium">{t('navbar.organization')}</span>
             </div>
             <div className="flex items-center space-x-4">
               {/* Font Size Controls - Desktop */}

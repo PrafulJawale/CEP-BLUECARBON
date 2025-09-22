@@ -54,17 +54,11 @@ const LandingPage = () => {
 
   return (
     <div className="min-h-screen" id="main-content">
-      {/* Digital India Initiative Banner - UX4G Standard */}
+      {/* Professional Platform Banner */}
       <div className="bg-primary text-primary-foreground py-3">
         <div className="container mx-auto px-6 text-center">
-          <img 
-          src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/2560px-Flag_of_India.svg.png'
-          alt="Indian Flag" 
-          className="w-8 h-5 inline-block mr-2"
-          />
-          {/* A Digital India Initiative | Ministry of Environment, Forest and Climate Change */}
           <p className="text-sm font-medium">
-             {t('landing.digitalIndiaInitiative')}
+             {t('landing.professionalInitiative')}
           </p>
         </div>
       </div>
@@ -82,7 +76,7 @@ const LandingPage = () => {
           <div className="mb-4 sm:mb-6">
             <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-sea-green/10 text-sea-green rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">
               <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-2 flex-shrink-0" />
-              <span>{t('landing.hero.govInitiative')}</span>
+              <span>{t('landing.hero.initiative')}</span>
             </div>
           </div>
           
@@ -97,7 +91,7 @@ const LandingPage = () => {
           <div className="flex flex-wrap justify-center gap-6 mb-8">
             <div className="flex items-center text-sm text-muted-foreground">
               <Shield className="h-4 w-4 mr-2 text-sea-green" />
-              Government Verified
+              {t('landing.professionallyVerified')}
             </div>
             <div className="flex items-center text-sm text-muted-foreground">
               <Globe className="h-4 w-4 mr-2 text-ocean-medium" />
@@ -204,7 +198,7 @@ const LandingPage = () => {
       <section className="py-20 px-6">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold gradient-text mb-4">{t('landing.governmentServices')}</h2>
+            <h2 className="text-4xl font-bold gradient-text mb-4">{t('landing.platformServices')}</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               {t('landing.servicesDescription')}
             </p>
@@ -228,12 +222,12 @@ const LandingPage = () => {
               <div className="w-16 h-16 bg-gradient-sea rounded-full flex items-center justify-center mx-auto mb-6">
                 <Shield className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">{t('landing.forGovt')}</h3>
+              <h3 className="text-xl font-semibold mb-3">{t('landing.forOrganizations')}</h3>
               <p className="text-muted-foreground mb-4">
-                {t('landing.govtDesc')}
+                {t('landing.organizationsDesc')}
               </p>
               <Button variant="outline" onClick={() => navigate('/admin')}>
-                {t('landing.adminPortal')}
+                {t('landing.organizationPortal')}
               </Button>
             </Card>
 
