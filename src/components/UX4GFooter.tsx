@@ -57,7 +57,7 @@ const UX4GFooter = () => {
               <div className="flex items-start space-x-2 text-muted-foreground">
                 <Mail className="h-4 w-4 mt-0.5 text-primary" />
                 <div>
-                  <p>support@karban.example.com</p>
+                  <p>support@bluecarbon-registry.example.com</p>
                   <p className="text-xs">{t('footer.generalInquiries')}</p>
                 </div>
               </div>

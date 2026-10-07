@@ -1,7 +1,7 @@
 {
-  "name": "Kārban - Professional Carbon Platform",
-  "short_name": "Kārban",
-  "description": "Professional monitoring, reporting & verification platform for coastal and mangrove restoration projects worldwide.",
+  "name": "Blue Carbon Registry and MRV System",
+  "short_name": "BlueCarbon MRV",
+  "description": "Monitoring, Reporting & Verification system for blue carbon projects - mangroves, seagrass, and coastal ecosystems. College CEP Project.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a4d68",

@@ -40,16 +40,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         {
           id: '1',
           username: 'admin',
-          email: 'admin@karban.in',
+          email: 'admin@example.com',
           password: 'admin123',
           role: 'Admin' as UserRole,
-          organization: 'NCCR',
+          organization: 'CEP Project Team',
           createdAt: new Date().toISOString(),
         },
         {
           id: '2',
           username: 'ngo_user',
-          email: 'ngo@karban.in',
+          email: 'ngo@example.com',
           password: 'ngo123',
           role: 'NGO' as UserRole,
           organization: 'Green Earth Foundation',
@@ -58,7 +58,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         {
           id: '3',
           username: 'panchayat_user',
-          email: 'panchayat@karban.in',
+          email: 'panchayat@example.com',
           password: 'panchayat123',
           role: 'Panchayat' as UserRole,
           organization: 'Coastal Panchayat Council',
@@ -67,7 +67,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         {
           id: '4',
           username: 'govt_officer',
-          email: 'govadmin@karban.in',
+          email: 'govadmin@example.com',
           password: 'govt123',
           role: 'Govt Officer' as UserRole,
           organization: 'official organization',
@@ -76,7 +76,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         {
           id: '5',
           username: 'researcher_user',
-          email: 'researcher@karban.in',
+          email: 'researcher@example.com',
           password: 'research123',
           role: 'Researcher' as UserRole,
           organization: 'Oceanic Research Institute',
@@ -85,7 +85,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         {
           id: '6',
           username: 'buyer_user',
-          email: 'buyer@karban.in',
+          email: 'buyer@example.com',
           password: 'buyer123',
           role: 'Buyer' as UserRole,
           organization: 'BlueCarbon Traders',

@@ -95,11 +95,11 @@ const LandingPage = () => {
             </div>
             <div className="flex items-center text-sm text-muted-foreground">
               <Globe className="h-4 w-4 mr-2 text-ocean-medium" />
-              Blockchain Secured
+              {t('landing.blockchainSecured')}
             </div>
             <div className="flex items-center text-sm text-muted-foreground">
               <BarChart3 className="h-4 w-4 mr-2 text-coral" />
-              Real-time Monitoring
+              {t('landing.realTimeMonitoring')}
             </div>
           </div>
 
@@ -109,7 +109,7 @@ const LandingPage = () => {
               className="px-8 py-4 text-lg group"
               onClick={() => navigate('/register')}
             >
-              Register Your Project
+              {t('landing.registerProject')}
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
             <Button 
@@ -118,7 +118,7 @@ const LandingPage = () => {
               className="px-8 py-4 text-lg"
               onClick={() => navigate('/registry')}
             >
-              Explore Registry
+              {t('landing.exploreRegistry')}
             </Button>
           </div>
 

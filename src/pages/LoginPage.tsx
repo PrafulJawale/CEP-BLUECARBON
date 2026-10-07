@@ -79,7 +79,7 @@ const LoginPage = () => {
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center space-x-2 mb-6">
             <Waves className="h-10 w-10 text-ocean-deep" />
-            <h1 className="text-3xl font-bold gradient-text">BlueCarbon MRV</h1>
+            <h1 className="text-3xl font-bold gradient-text">Blue Carbon Registry MRV</h1>
           </Link>
           <h2 className="text-2xl font-bold text-foreground">{t('login.welcomeBack')}</h2>
           <p className="text-muted-foreground mt-2">{t('login.subtitle')}</p>
@@ -149,12 +149,12 @@ const LoginPage = () => {
             <div className="mt-6 p-4 bg-ocean-surface/20 rounded-lg">
               <p className="text-xs text-muted-foreground mb-2">Demo Credentials:</p>
               <div className="text-xs space-y-1">
-                <div>Admin: admin@karban.in / admin123</div>
-                <div>NGO: ngo@karban.in / ngo123</div>
-                <div>Panchayat: panchayat@karban.in / panchayat123</div>
-                <div>Researcher: researcher@karban.in / researcher123</div>
-                <div>Buyer: buyer@karban.in / buyer123</div>
-                <div>Gov Admin: govadmin@karban.in / govadmin123</div>
+                <div>Admin: admin@example.com / admin123</div>
+                <div>NGO: ngo@example.com / ngo123</div>
+                <div>Panchayat: panchayat@example.com / panchayat123</div>
+                <div>Researcher: researcher@example.com / researcher123</div>
+                <div>Buyer: buyer@example.com / buyer123</div>
+                <div>Gov Officer: govadmin@example.com / govadmin123</div>
               </div>
             </div>
           </div>

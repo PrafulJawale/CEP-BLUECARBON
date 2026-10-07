@@ -87,7 +87,7 @@ const AdminPanel = () => {
               <div className="flex items-center space-x-3 mb-2">
                 <Shield className="h-6 sm:h-8 w-6 sm:w-8 text-ocean-deep" /> {/* Smaller icon on mobile */}
                 <div>
-                  <h1 className="text-2xl sm:text-3xl font-bold gradient-text">{t('admin.nccr')} {t('admin.adminPanel')}</h1> {/* Smaller text on mobile */}
+                  <h1 className="text-2xl sm:text-3xl font-bold gradient-text">{t('admin.adminPanel')}</h1> {/* Smaller text on mobile */}
                   <p className="text-sm text-muted-foreground">{t('admin.nationalRegistry')}</p>
                 </div>
               </div>

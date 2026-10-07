@@ -77,7 +77,7 @@ const RegisterPage = () => {
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center space-x-2 mb-6">
             <Waves className="h-10 w-10 text-ocean-deep" />
-            <h1 className="text-3xl font-bold gradient-text">BlueCarbon MRV</h1>
+            <h1 className="text-3xl font-bold gradient-text">Blue Carbon Registry MRV</h1>
           </Link>
           <h2 className="text-2xl font-bold text-foreground">{t('register.title')}</h2>
           <p className="text-muted-foreground mt-2">{t('register.subtitle')}</p>

@@ -104,7 +104,7 @@ const VerificationWorkflow = () => {
       {
         id: 'admin_approval',
         name: 'Admin Approval',
-        description: 'Final review and approval by NCCR administrators',
+        description: 'Final review and approval by administrators',
         icon: <Shield className="h-6 w-6" />,
         status: project.status === 'approved' ? 'completed' : 
                project.status === 'rejected' ? 'failed' : 'pending',
