@@ -117,30 +117,30 @@ const LandingPage = () => {
               size="lg" 
               className="px-8 py-4 text-lg"
               onClick={() => navigate('/registry')}
-            >
+>
               {t('landing.exploreRegistry')}
             </Button>
           </div>
 
-          {/* Quick Stats - Government Format */}
-          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">1,200+</div>
-              <div className="text-sm text-muted-foreground">{t('landing.projectsRegistered')}</div>
+            {/* Quick Stats - Government Format */}
+            <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-primary">0</div>
+                <div className="text-sm text-muted-foreground">{t('landing.projectsRegistered')}</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-sea-green">0</div>
+                <div className="text-sm text-muted-foreground">{t('landing.co2Captured')}</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-coral">0</div>
+                <div className="text-sm text-muted-foreground">{t('landing.ngosParticipating')}</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-ocean-medium">0</div>
+                <div className="text-sm text-muted-foreground">{t('landing.statesCovered')}</div>
+              </div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-sea-green">2.5M</div>
-              <div className="text-sm text-muted-foreground">{t('landing.co2Captured')}</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-coral">850+</div>
-              <div className="text-sm text-muted-foreground">{t('landing.ngosParticipating')}</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-ocean-medium">15</div>
-              <div className="text-sm text-muted-foreground">{t('landing.statesCovered')}</div>
-            </div>
-          </div>
         </div>
       </section>
 

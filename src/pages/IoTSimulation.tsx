@@ -133,7 +133,7 @@ const IoTSimulation = () => {
             </Button>
             <div>
               <h1 className="text-xl sm:text-2xl font-bold gradient-text">{t('navbar.iotSensors')}</h1> {/* Smaller text on mobile */}
-              <p className="text-sm sm:text-base text-muted-foreground">{t('iot.realTimeMonitoring')}</p> {/* Smaller text on mobile */}
+              <p className="text-sm sm:text-base text-muted-foreground">{t('iot.realTimeMonitoring')} <Badge variant="outline" className="ml-2 text-xs">Simulated Data</Badge></p> {/* Smaller text on mobile */}
             </div>
           </div>
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4"> {/* Stack vertically on mobile */}

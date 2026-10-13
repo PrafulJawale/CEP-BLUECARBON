@@ -26,12 +26,12 @@ const PWAInstallPrompt = () => {
 
   useEffect(() => {
     // Check if already installed/standalone
-    const checkStandalone = () => {
-      setIsStandalone(
-        window.matchMedia('(display-mode: standalone)').matches ||
-        (window.navigator as any).standalone === true
-      );
-    };
+const checkStandalone = () => {
+        setIsStandalone(
+          window.matchMedia('(display-mode: standalone)').matches ||
+          (window.navigator as Navigator & { standalone?: boolean }).standalone === true
+        );
+      };
 
     checkStandalone();
     window.matchMedia('(display-mode: standalone)').addListener(checkStandalone);

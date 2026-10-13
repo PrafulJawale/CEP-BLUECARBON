@@ -5,19 +5,19 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Shield, AlertTriangle, CheckCircle, XCircle, BarChart3 } from 'lucide-react';
+import { Shield, AlertTriangle, CheckCircle, XCircle, BarChart3, RefreshCw } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { gsap } from 'gsap';
 import { useTranslation } from '@/contexts/LanguageContext';
 
 const AdminPanel = () => {
   const { user } = useAuth();
-  const { projects, approveProject, rejectProject } = useData();
+  const { projects, approveProject, rejectProject, isLoading, error, refreshProjects } = useData();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (!user || user.role !== 'Admin') {
+    if (!user || user.role !== 'admin') {
       navigate('/dashboard');
       return;
     }
@@ -46,14 +46,56 @@ const AdminPanel = () => {
     });
   };
 
-  if (!user || user.role !== 'Admin') return null;
+  if (!user || user.role !== 'admin') return null;
 
   const pendingProjects = projects.filter(p => p.status === 'pending');
   const approvedProjects = projects.filter(p => p.status === 'approved');
   const rejectedProjects = projects.filter(p => p.status === 'rejected');
 
+  if (isLoading && projects.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-surface flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin h-12 w-12 border-4 border-ocean-deep border-t-transparent rounded-full"></div>
+          <p className="text-muted-foreground">{t('admin.loading')}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error && projects.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-surface flex items-center justify-center">
+        <div className="text-center p-8">
+          <p className="text-destructive mb-4">{error}</p>
+          <Button variant="outline" onClick={refreshProjects}>
+            {t('common.retry')}
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-surface" id="main-content">
+      {error && !isLoading && (
+        <div className="container mx-auto px-4 sm:px-6 mb-4">
+          <div className="flex items-center justify-between p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+            <p className="text-destructive text-sm">{error}</p>
+            <Button variant="outline" size="sm" onClick={refreshProjects} disabled={isLoading}>
+              {isLoading ? (
+                <span className="flex items-center gap-1">
+                  <span className="animate-spin h-4 w-4 border-2 border-current border-t-transparent rounded-full"></span>
+                  {t('common.loading')}
+                </span>
+              ) : (
+                t('common.retry')
+              )}
+            </Button>
+          </div>
+        </div>
+      )}
+
       {/* Government Header Pattern - UX4G */}
       <div className="bg-destructive/10 border-b border-destructive/20 py-2">
         <div className="container mx-auto px-4 sm:px-6"> {/* Reduced padding on mobile */}
@@ -163,12 +205,12 @@ const AdminPanel = () => {
           </Card>
         </div>
 
-        {/* Fraud Detection Alerts */}
+        {/* Fraud Detection Alerts (Demo Data) */}
         <Card className="admin-card glass-card mb-6 sm:mb-8"> {/* Reduced margin on mobile */}
           <div className="p-4 sm:p-6"> {/* Reduced padding on mobile */}
             <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 flex items-center"> {/* Smaller text on mobile */}
               <AlertTriangle className="h-4 sm:h-5 w-4 sm:w-5 text-coral mr-2" /> {/* Smaller icon on mobile */}
-              {t('admin.fraudDetection')}
+              {t('admin.fraudDetection')} <Badge variant="outline" className="ml-2 text-xs">Demo Data</Badge>
             </h3>
             <div className="space-y-3">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 bg-coral/10 rounded-lg gap-2"> {/* Stack vertically on mobile */}

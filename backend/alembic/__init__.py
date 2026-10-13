@@ -1,0 +1,1 @@
+# Alembic migrations for Blue Carbon Registry & MRV System

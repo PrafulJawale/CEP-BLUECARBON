@@ -148,7 +148,7 @@ const Navbar = () => {
   ];
 
   // Add admin-specific items
-  if (user?.role === 'Admin') {
+  if (user?.role === 'admin') {
     navItems.push({ name: t('navbar.adminPanel'), path: '/admin', icon: Settings });
   }
 
@@ -213,7 +213,7 @@ const Navbar = () => {
                   {/* User Menu */}
                   <div className="flex items-center space-x-1 sm:space-x-3">
                     <div className="hidden lg:block text-right min-w-0">
-                      <p className="text-xs lg:text-sm font-medium truncate max-w-24">{user.username}</p>
+                      <p className="text-xs lg:text-sm font-medium truncate max-w-24">{user.full_name}</p>
                       <p className="text-xs text-muted-foreground truncate">{user.role}</p>
                     </div>
                     <Button variant="ghost" size="sm" onClick={logout} className="p-2">
@@ -272,11 +272,11 @@ const Navbar = () => {
                     <div className="flex items-center space-x-3">
                       <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
                         <span className="text-xs font-bold text-primary-foreground">
-                          {user.username.charAt(0).toUpperCase()}
+                          {user.full_name.charAt(0).toUpperCase()}
                         </span>
                       </div>
                       <div>
-                        <p className="text-sm font-medium">{user.username}</p>
+                        <p className="text-sm font-medium">{user.full_name}</p>
                         <p className="text-xs text-muted-foreground">{user.role}</p>
                       </div>
                     </div>

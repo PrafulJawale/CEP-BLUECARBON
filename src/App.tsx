@@ -23,9 +23,14 @@ import GISMapping from "./pages/GISMapping";
 import IoTSimulation from "./pages/IoTSimulation";
 import VerificationWorkflow from "./pages/VerificationWorkflow";
 import CarbonWallet from "./pages/CarbonWallet";
+import Notifications from "./pages/Notifications";
+import Analytics from "./pages/Analytics";
+import FraudDetection from "./pages/FraudDetection";
+import ThreeDVisualization from "./pages/ThreeDVisualization";
+import CalculationManager from "./pages/CalculationManager";
 import NotFound from "./pages/NotFound";
 import { ProtectedRoute, RoleRoute } from './components/RouteGuards';
-import type { UserRole } from '@/contexts/AuthContext';
+import type { FrontendUserRole } from '@/contexts/AuthContext';
 import Navbar from '@/components/Navbar';
 import UX4GFooter from '@/components/UX4GFooter';
 import PWAInstallPrompt from '@/components/PWAInstallPrompt';
@@ -61,7 +66,7 @@ const App = () => (
                             <Route path="/wallet" element={<ProtectedRoute><CarbonWallet /></ProtectedRoute>} />
 
                             {/* Admin-only */}
-                            <Route path="/admin" element={<RoleRoute allowed={["Admin"] as UserRole[]}><AdminPanel /></RoleRoute>} />
+                            <Route path="/admin" element={<RoleRoute allowed={["admin"] as FrontendUserRole[]}><AdminPanel /></RoleRoute>} />
 
                             <Route path="/community" element={<CommunityPortal />} />
                             <Route path="/gis-mapping" element={<GISMapping />} />
@@ -70,8 +75,20 @@ const App = () => (
                             {/* Verification workflow: admin and govt officer */}
                             <Route
                               path="/verification-workflow"
-                              element={<RoleRoute allowed={["Admin", "Govt Officer"] as UserRole[]}><VerificationWorkflow /></RoleRoute>}
+                              element={<RoleRoute allowed={["admin", "government_officer"] as FrontendUserRole[]}><VerificationWorkflow /></RoleRoute>}
                             />
+
+                            {/* Calculation Manager: project developers, admins, govt officers */}
+                            <Route
+                              path="/calculations"
+                              element={<RoleRoute allowed={["admin", "government_officer", "project_developer"] as FrontendUserRole[]}><CalculationManager /></RoleRoute>}
+                            />
+
+                            {/* New pages */}
+                            <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+                            <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+                            <Route path="/fraud-detection" element={<RoleRoute allowed={["admin"] as FrontendUserRole[]}><FraudDetection /></RoleRoute>} />
+                            <Route path="/3d-visualization" element={<ProtectedRoute><ThreeDVisualization /></ProtectedRoute>} />
 
                             <Route path="*" element={<NotFound />} />
                           </Routes>

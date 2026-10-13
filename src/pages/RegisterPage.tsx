@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth, UserRole } from '@/contexts/AuthContext';
+import { useAuth, type FrontendUserRole } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -13,11 +13,12 @@ import { useTranslation } from '@/contexts/LanguageContext';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
-    username: '',
     email: '',
     password: '',
-    role: '' as UserRole,
+    full_name: '',
+    role: '' as FrontendUserRole,
     organization: '',
+    phone: '',
   });
   const [isLoading, setIsLoading] = useState(false);
   const { register, isAuthenticated } = useAuth();
@@ -41,8 +42,8 @@ const RegisterPage = () => {
     setIsLoading(true);
 
     try {
-      const success = await register(formData);
-      if (success) {
+      const result = await register(formData);
+      if (result.success) {
         toast({
           title: t('register.registrationSuccess'),
           description: t('register.accountCreated'),
@@ -51,7 +52,7 @@ const RegisterPage = () => {
       } else {
         toast({
           title: t('register.registrationFailed'),
-          description: "User with this email already exists.",
+          description: result.error || "Registration failed.",
           variant: "destructive",
         });
       }
@@ -88,14 +89,14 @@ const RegisterPage = () => {
           <div className="p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="username">{t('register.username')}</Label>
+                <Label htmlFor="full_name">{t('register.fullName')}</Label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
-                    id="username"
-                    placeholder="Enter username"
-                    value={formData.username}
-                    onChange={(e) => updateFormData('username', e.target.value)}
+                    id="full_name"
+                    placeholder="Enter your full name"
+                    value={formData.full_name}
+                    onChange={(e) => updateFormData('full_name', e.target.value)}
                     className="pl-10"
                     required
                   />
@@ -130,22 +131,23 @@ const RegisterPage = () => {
                     onChange={(e) => updateFormData('password', e.target.value)}
                     className="pl-10"
                     required
+                    minLength={8}
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="role">{t('register.role')}</Label>
-                <Select onValueChange={(value) => updateFormData('role', value as UserRole)} required>
+                <Select onValueChange={(value) => updateFormData('role', value as FrontendUserRole)} required>
                   <SelectTrigger>
                     <SelectValue placeholder={t('register.selectRole')} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="NGO">NGO</SelectItem>
-                    <SelectItem value="Panchayat">Panchayat</SelectItem>
-                    <SelectItem value="Govt Officer">ADMIN Officer</SelectItem>
-                    <SelectItem value="Researcher">Researcher</SelectItem>
-                    <SelectItem value="Buyer">Credit Buyer</SelectItem>
+                    <SelectItem value="project_developer">Project Developer</SelectItem>
+                    <SelectItem value="government_officer">Government Officer</SelectItem>
+                    <SelectItem value="buyer">Credit Buyer</SelectItem>
+                    <SelectItem value="researcher">Researcher</SelectItem>
+                    <SelectItem value="community_representative">Community Representative</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -156,12 +158,24 @@ const RegisterPage = () => {
                   <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
                     id="organization"
-                    placeholder="Enter organization name"
+                    placeholder="Enter organization name (optional)"
                     value={formData.organization}
                     onChange={(e) => updateFormData('organization', e.target.value)}
                     className="pl-10"
                   />
                 </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="phone">{t('register.phone')}</Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  placeholder="Enter phone number (optional)"
+                  value={formData.phone}
+                  onChange={(e) => updateFormData('phone', e.target.value)}
+                  className="pl-10"
+                />
               </div>
 
               <Button 

@@ -60,7 +60,7 @@ const CommunityPortal = () => {
             <h1 className="text-3xl font-bold gradient-text">{t('common.community')}</h1>
           </div>
           <p className="text-muted-foreground">
-            {t('common.welcome')} {user.username} • {user.role} • {user.organization || t('common.independent')}
+            {t('common.welcome')} {user.full_name} • {user.role} • {user.organization || t('common.independent')}
           </p>
         </div>
       </header>

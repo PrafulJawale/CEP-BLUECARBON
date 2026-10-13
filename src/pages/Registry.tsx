@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import { useData } from '@/contexts/DataContext';
+import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, TreePine, Leaf, Calendar, CheckCircle } from 'lucide-react';
 import { gsap } from 'gsap';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 const Registry = () => {
-  const { projects } = useData();
+  const { projects, isLoading, error, refreshProjects } = useData();
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Page animations
@@ -22,6 +25,30 @@ const Registry = () => {
   }, []);
 
   const verifiedProjects = projects.filter(project => project.verified);
+
+  if (isLoading && verifiedProjects.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-surface flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin h-12 w-12 border-4 border-ocean-deep border-t-transparent rounded-full"></div>
+          <p className="text-muted-foreground">{t('registry.loading')}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error && verifiedProjects.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-surface flex items-center justify-center">
+        <div className="text-center p-8">
+          <p className="text-destructive mb-4">{error}</p>
+          <Button variant="outline" onClick={refreshProjects}>
+            {t('common.retry')}
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-surface">
@@ -43,6 +70,25 @@ const Registry = () => {
           </div>
         </div>
       </header>
+
+      {/* Error/Loading Status */}
+      {error && !isLoading && (
+        <div className="container mx-auto px-4 sm:px-6 mb-4">
+          <div className="flex items-center justify-between p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+            <p className="text-destructive text-sm">{error}</p>
+            <Button variant="outline" size="sm" onClick={refreshProjects} disabled={isLoading}>
+              {isLoading ? (
+                <span className="flex items-center gap-1">
+                  <span className="animate-spin h-4 w-4 border-2 border-current border-t-transparent rounded-full"></span>
+                  {t('common.loading')}
+                </span>
+              ) : (
+                t('common.retry')
+              )}
+            </Button>
+          </div>
+        </div>
+      )}
 
       <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8"> {/* Reduced padding on mobile */}
         {/* Stats Summary */}
@@ -148,11 +194,11 @@ const Registry = () => {
                       </div>
                     </div>
 
-                    {/* Blockchain Hash Simulation */}
+                    {/* Blockchain Hash (Simulated) */}
                     <div className="mt-3 sm:mt-4 p-2 sm:p-3 bg-ocean-surface/10 rounded-lg"> {/* Reduced padding on mobile */}
-                      <div className="text-xs text-muted-foreground mb-1">Blockchain Hash:</div>
+                      <div className="text-xs text-muted-foreground mb-1">Blockchain Hash (Simulated):</div>
                       <div className="font-mono text-xs text-ocean-deep break-all"> {/* Allow breaking for long hashes */}
-                        0x{Math.random().toString(16).substr(2, 8)}...{Math.random().toString(16).substr(2, 8)}
+                        0x{project.id.padStart(8, '0')}...simulated
                       </div>
                     </div>
                   </div>

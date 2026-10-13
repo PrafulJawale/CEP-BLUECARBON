@@ -1,22 +1,39 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { api, type UserResponse, ApiError, UserResponseSchema, TokenSchema } from '@/lib/api';
 
-export type UserRole = 'NGO' | 'Panchayat' | 'Govt Officer' | 'Researcher' | 'Buyer' | 'Admin';
+export type FrontendUserRole = 'admin' | 'government_officer' | 'project_developer' | 'buyer' | 'researcher' | 'community_representative';
+
+export type UserRole = FrontendUserRole;
 
 export interface User {
   id: string;
-  username: string;
   email: string;
-  role: UserRole;
+  full_name: string;
+  role: FrontendUserRole;
   organization?: string;
-  createdAt: string;
+  status: string;
+  last_login_at?: string;
+  created_at: string;
+  updated_at: string;
 }
 
 interface AuthContextType {
   user: User | null;
-  login: (email: string, password: string) => Promise<boolean>;
-  register: (userData: Omit<User, 'id' | 'createdAt'> & { password: string }) => Promise<boolean>;
-  logout: () => void;
+  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  register: (userData: RegisterData) => Promise<{ success: boolean; error?: string }>;
+  logout: () => Promise<void>;
+  refreshSession: () => Promise<boolean>;
   isAuthenticated: boolean;
+  isLoading: boolean;
+}
+
+interface RegisterData {
+  email: string;
+  password: string;
+  full_name: string;
+  role: FrontendUserRole;
+  organization?: string;
+  phone?: string;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -29,118 +46,113 @@ export const useAuth = () => {
   return context;
 };
 
+function mapBackendRoleToFrontend(role: string): FrontendUserRole {
+  const roleMap: Record<string, FrontendUserRole> = {
+    admin: 'admin',
+    government_officer: 'government_officer',
+    project_developer: 'project_developer',
+    buyer: 'buyer',
+    researcher: 'researcher',
+    community_representative: 'community_representative',
+  };
+  return roleMap[role] || 'project_developer';
+}
+
+function mapBackendUserToFrontend(user: UserResponse): User {
+  return {
+    id: user.id,
+    email: user.email,
+    full_name: user.full_name,
+    role: mapBackendRoleToFrontend(user.role),
+    organization: user.organization || undefined,
+    status: user.status,
+    last_login_at: user.last_login_at || undefined,
+    created_at: user.created_at,
+    updated_at: user.updated_at,
+  };
+}
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    // Initialize with sample data if localStorage is empty
-    const users = localStorage.getItem('bluecarbon_users');
-    if (!users) {
-      const sampleUsers = [
-        {
-          id: '1',
-          username: 'admin',
-          email: 'admin@example.com',
-          password: 'admin123',
-          role: 'Admin' as UserRole,
-          organization: 'CEP Project Team',
-          createdAt: new Date().toISOString(),
-        },
-        {
-          id: '2',
-          username: 'ngo_user',
-          email: 'ngo@example.com',
-          password: 'ngo123',
-          role: 'NGO' as UserRole,
-          organization: 'Green Earth Foundation',
-          createdAt: new Date().toISOString(),
-        },
-        {
-          id: '3',
-          username: 'panchayat_user',
-          email: 'panchayat@example.com',
-          password: 'panchayat123',
-          role: 'Panchayat' as UserRole,
-          organization: 'Coastal Panchayat Council',
-          createdAt: new Date().toISOString(),
-        },
-        {
-          id: '4',
-          username: 'govt_officer',
-          email: 'govadmin@example.com',
-          password: 'govt123',
-          role: 'Govt Officer' as UserRole,
-          organization: 'official organization',
-          createdAt: new Date().toISOString(),
-        },
-        {
-          id: '5',
-          username: 'researcher_user',
-          email: 'researcher@example.com',
-          password: 'research123',
-          role: 'Researcher' as UserRole,
-          organization: 'Oceanic Research Institute',
-          createdAt: new Date().toISOString(),
-        },
-        {
-          id: '6',
-          username: 'buyer_user',
-          email: 'buyer@example.com',
-          password: 'buyer123',
-          role: 'Buyer' as UserRole,
-          organization: 'BlueCarbon Traders',
-          createdAt: new Date().toISOString(),
-        },
-      ];
-      localStorage.setItem('bluecarbon_users', JSON.stringify(sampleUsers));
-    }
-
-    // Check if user is logged in
-    const currentUser = localStorage.getItem('bluecarbon_current_user');
-    if (currentUser) {
-      setUser(JSON.parse(currentUser));
+  const refreshSession = useCallback(async (): Promise<boolean> => {
+    try {
+      const response = await api.get('/auth/me', UserResponseSchema);
+      setUser(mapBackendUserToFrontend(response));
+      return true;
+    } catch (error) {
+      if (error instanceof ApiError && error.status === 401) {
+        try {
+          await api.post('/auth/refresh', {});
+          const response = await api.get('/auth/me', UserResponseSchema);
+          setUser(mapBackendUserToFrontend(response));
+          return true;
+        } catch {
+          setUser(null);
+          return false;
+        }
+      }
+      setUser(null);
+      return false;
+    } finally {
+      setIsLoading(false);
     }
   }, []);
 
-  const login = async (email: string, password: string): Promise<boolean> => {
-    const users = JSON.parse(localStorage.getItem('bluecarbon_users') || '[]');
-    const foundUser = users.find((u: any) => u.email === email && u.password === password);
-    
-    if (foundUser) {
-      const { password: _, ...userWithoutPassword } = foundUser;
-      setUser(userWithoutPassword);
-      localStorage.setItem('bluecarbon_current_user', JSON.stringify(userWithoutPassword));
-      return true;
+  useEffect(() => {
+    refreshSession();
+  }, [refreshSession]);
+
+  const login = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
+    setIsLoading(true);
+    try {
+      await api.post('/auth/login', { email, password }, TokenSchema);
+      const response = await api.get('/auth/me', UserResponseSchema);
+      setUser(mapBackendUserToFrontend(response));
+      return { success: true };
+    } catch (error) {
+      if (error instanceof ApiError) {
+        return { success: false, error: error.message };
+      }
+      return { success: false, error: 'An unexpected error occurred' };
+    } finally {
+      setIsLoading(false);
     }
-    return false;
   };
 
-  const register = async (userData: Omit<User, 'id' | 'createdAt'> & { password: string }): Promise<boolean> => {
-    const users = JSON.parse(localStorage.getItem('bluecarbon_users') || '[]');
-    
-    // Check if user already exists
-    if (users.find((u: any) => u.email === userData.email)) {
-      return false;
+  const register = async (userData: RegisterData): Promise<{ success: boolean; error?: string }> => {
+    setIsLoading(true);
+    try {
+      await api.post('/auth/register', {
+        email: userData.email,
+        password: userData.password,
+        full_name: userData.full_name,
+        role: userData.role,
+        organization: userData.organization,
+        phone: userData.phone,
+      });
+      const response = await api.get('/auth/me', UserResponseSchema);
+      setUser(mapBackendUserToFrontend(response));
+      return { success: true };
+    } catch (error) {
+      if (error instanceof ApiError) {
+        return { success: false, error: error.message };
+      }
+      return { success: false, error: 'An unexpected error occurred' };
+    } finally {
+      setIsLoading(false);
     }
-
-    const newUser = {
-      ...userData,
-      id: Date.now().toString(),
-      createdAt: new Date().toISOString(),
-    };
-
-    users.push(newUser);
-    localStorage.setItem('bluecarbon_users', JSON.stringify(users));
-
-    const { password: _, ...userWithoutPassword } = newUser;
-    setUser(userWithoutPassword);
-    localStorage.setItem('bluecarbon_current_user', JSON.stringify(userWithoutPassword));
-    return true;
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('bluecarbon_current_user');
+  const logout = async (): Promise<void> => {
+    try {
+      await api.post('/auth/logout', {});
+    } catch {
+      // Ignore logout errors
+    } finally {
+      setUser(null);
+    }
   };
 
   return (
@@ -150,7 +162,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         login,
         register,
         logout,
+        refreshSession,
         isAuthenticated: !!user,
+        isLoading,
       }}
     >
       {children}

@@ -60,23 +60,23 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
   // Translation function with nested key support
   const t = (key: string, fallback?: string): string => {
     const keys = key.split('.');
-    let value: any = translations[language];
+    let value: unknown = translations[language];
     
     for (const k of keys) {
       if (value && typeof value === 'object' && k in value) {
-        value = value[k];
+        value = (value as Record<string, unknown>)[k];
       } else {
         // If key not found, try English as fallback
-        let englishValue: any = translations.en;
+        let englishValue: unknown = translations.en;
         for (const ek of keys) {
           if (englishValue && typeof englishValue === 'object' && ek in englishValue) {
-            englishValue = englishValue[ek];
+            englishValue = (englishValue as Record<string, unknown>)[ek];
           } else {
             englishValue = null;
             break;
           }
         }
-        return englishValue || fallback || key;
+        return (englishValue as string) || fallback || key;
       }
     }
     

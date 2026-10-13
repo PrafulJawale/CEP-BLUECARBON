@@ -4,13 +4,14 @@ import { useData } from '@/contexts/DataContext';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { TreePine, TrendingUp, Coins, Leaf, Plus, BarChart3 } from 'lucide-react';
 import { gsap } from 'gsap';
 import { useTranslation } from '@/contexts/LanguageContext';
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
-  const { projects, getUserProjects } = useData();
+  const { projects, getUserProjects, isLoading, error, refreshProjects } = useData();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -45,6 +46,30 @@ const Dashboard = () => {
     }
   };
 
+  if (isLoading && userProjects.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-surface flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin h-12 w-12 border-4 border-ocean-deep border-t-transparent rounded-full"></div>
+          <p className="text-muted-foreground">{t('dashboard.loading')}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error && userProjects.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-surface flex items-center justify-center">
+        <div className="text-center p-8">
+          <p className="text-destructive mb-4">{error}</p>
+          <Button variant="outline" onClick={refreshProjects}>
+            {t('common.retry')}
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-surface" id="main-content">
       {/* Breadcrumb - UX4G Standard */}
@@ -62,7 +87,7 @@ const Dashboard = () => {
           <div className="flex flex-col md:flex-row md:items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold gradient-text mb-1">{t('common.dashboard')}</h1>
-              <p className="text-muted-foreground">{t('dashboard.welcomeBack')}, <span className="font-medium text-foreground">{user.username}</span></p>
+              <p className="text-muted-foreground">{t('dashboard.welcomeBack')}, <span className="font-medium text-foreground">{user.full_name}</span></p>
               <div className="flex items-center mt-2">
                 <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
                   {user.role}
@@ -108,7 +133,7 @@ const Dashboard = () => {
             <div className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">{t('dashboard.co2Sequestered')}</p>
+                  <p className="text-sm text-muted-foreground">{t('dashboard.co2Sequestered')} <Badge variant="outline" className="ml-1 text-xs">Estimate</Badge></p>
                   <p className="text-3xl font-bold gradient-sea-text">{totalCO2.toFixed(1)}t</p>
                 </div>
                 <div className="w-12 h-12 bg-gradient-sea rounded-lg flex items-center justify-center">
@@ -122,7 +147,7 @@ const Dashboard = () => {
             <div className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">{t('dashboard.creditsGenerated')}</p>
+                  <p className="text-sm text-muted-foreground">{t('dashboard.creditsGenerated')} <Badge variant="outline" className="ml-1 text-xs">Estimate</Badge></p>
                   <p className="text-3xl font-bold gradient-text">{totalCredits}</p>
                 </div>
                 <div className="w-12 h-12 bg-gradient-coral rounded-lg flex items-center justify-center">

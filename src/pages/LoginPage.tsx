@@ -40,8 +40,8 @@ const LoginPage = () => {
     setIsLoading(true);
 
     try {
-      const success = await login(email, password);
-      if (success) {
+      const result = await login(email, password);
+      if (result.success) {
         toast({
           title: t('login.welcomeBack'),
           description: t('login.loginSuccess'),
@@ -50,7 +50,7 @@ const LoginPage = () => {
       } else {
         toast({
           title: t('login.loginFailed'),
-          description: t('login.invalidCredentials'),
+          description: result.error || t('login.invalidCredentials'),
           variant: "destructive",
         });
       }

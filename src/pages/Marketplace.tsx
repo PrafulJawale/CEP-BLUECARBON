@@ -4,14 +4,14 @@ import { useData } from '@/contexts/DataContext';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Coins, TrendingUp, ShoppingCart, Leaf } from 'lucide-react';
+import { Coins, TrendingUp, ShoppingCart, Leaf, RefreshCw } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { gsap } from 'gsap';
 import { useTranslation } from '@/contexts/LanguageContext';
 
 const Marketplace = () => {
   const { user } = useAuth();
-  const { getAvailableCredits, purchaseCredits } = useData();
+  const { getAvailableCredits, purchaseCredits, isLoading, error, refreshProjects } = useData();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -33,6 +33,30 @@ const Marketplace = () => {
   }, []);
 
   const availableCredits = getAvailableCredits();
+
+  if (isLoading && availableCredits.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-surface flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin h-12 w-12 border-4 border-ocean-deep border-t-transparent rounded-full"></div>
+          <p className="text-muted-foreground">{t('marketplace.loading')}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error && availableCredits.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-surface flex items-center justify-center">
+        <div className="text-center p-8">
+          <p className="text-destructive mb-4">{error}</p>
+          <Button variant="outline" onClick={refreshProjects}>
+            {t('common.retry')}
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   const handlePurchase = (creditId: string) => {
     if (!user) {
@@ -59,8 +83,27 @@ const Marketplace = () => {
     }
   };
 
-  return (
+return (
     <div className="min-h-screen bg-gradient-surface">
+      {/* Error/Loading Status */}
+      {error && !isLoading && (
+        <div className="container mx-auto px-6 mb-4">
+          <div className="flex items_center justify-between p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+            <p className="text-destructive text-sm">{error}</p>
+            <Button variant="outline" size="sm" onClick={refreshProjects} disabled={isLoading}>
+              {isLoading ? (
+                <span className="flex items-center gap-1">
+                  <span className="animate-spin h-4 w-4 border-2 border-current border-t-transparent rounded-full"></span>
+                  {t('common.loading')}
+                </span>
+              ) : (
+                t('common.retry')
+              )}
+            </Button>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className="glass px-6 py-8">
         <div className="container mt-20 mx-auto text-center">
@@ -68,28 +111,32 @@ const Marketplace = () => {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             {t('marketplace.buyAndSell')}
           </p>
-          
-          {/* Animated Credit Tokens */}
-          <div className="relative mt-8 h-20 overflow-hidden">
-            <div className="credit-token absolute top-0 left-1/4 w-12 h-12 bg-gradient-ocean rounded-full flex items-center justify-center">
-              <Coins className="h-6 w-6 text-white" />
-            </div>
-            <div className="credit-token absolute top-2 right-1/3 w-10 h-10 bg-gradient-sea rounded-full flex items-center justify-center">
-              <Leaf className="h-5 w-5 text-white" />
-            </div>
-            <div className="credit-token absolute top-4 left-1/2 w-14 h-14 bg-gradient-coral rounded-full flex items-center justify-center">
-              <TrendingUp className="h-7 w-7 text-white" />
+            
+            {/* Animated Credit Tokens */}
+            <div className="relative mt-8 h-20 overflow-hidden">
+              <div className="credit-token absolute top-0 left-1/4 w-12 h-12 bg-gradient-ocean rounded-full flex items_center justify-center">
+                <Coins className="h-6 w-6 text-white" />
+              </div>
+              <div className="credit-token absolute top-2 right-1/3 w-10 h-10 bg-gradient-sea rounded-full flex items_center justify-center">
+                <Leaf className="h-5 w-5 text-white" />
+              </div>
+              <div className="credit-token absolute top-4 left-1/2 w-14 h-14 bg-gradient-coral rounded-full flex items_center justify-center">
+                <TrendingUp className="h-7 w-7 text-white" />
+              </div>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <div className="container mx-auto px-6 py-8">
-        {/* Market Stats */}
+        <div className="container mx-auto px-6 py-8">
+          {/* Market Stats */}
         <div className="grid md:grid-cols-4 gap-6 mb-12">
           <Card className="marketplace-card glass-card text-center">
             <div className="p-6">
-              <div className="text-3xl font-bold gradient-text mb-2">₹25</div>
+              <div className="text-3xl font-bold gradient-text mb-2">
+                {availableCredits.length > 0 
+                  ? `₹${(availableCredits.reduce((sum, c) => sum + c.amount * c.price, 0) / availableCredits.reduce((sum, c) => sum + c.amount, 0)).toFixed(0)}`
+                  : '₹0'}
+              </div>
               <div className="text-muted-foreground">{t('marketplace.avgPricePerCredit')}</div>
             </div>
           </Card>
@@ -105,14 +152,14 @@ const Marketplace = () => {
 
           <Card className="marketplace-card glass-card text-center">
             <div className="p-6">
-              <div className="text-3xl font-bold gradient-text mb-2">152</div>
+              <div className="text-3xl font-bold gradient-text mb-2">0</div>
               <div className="text-muted-foreground">{t('marketplace.transactionsToday')}</div>
             </div>
           </Card>
 
           <Card className="marketplace-card glass-card text-center">
             <div className="p-6">
-              <div className="text-3xl font-bold gradient-sea-text mb-2">+12%</div>
+              <div className="text-3xl font-bold gradient-sea-text mb-2">0%</div>
               <div className="text-muted-foreground">{t('marketplace.priceChange')}</div>
             </div>
           </Card>
@@ -133,7 +180,7 @@ const Marketplace = () => {
                 <Coins className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
                 <h3 className="text-xl font-semibold mb-2">{t('marketplace.availableCredits')}</h3>
                 <p className="text-muted-foreground">
-                  {t('marketplace.loginToPurchase')}
+                  {user ? t('marketplace.noCreditsAvailable') : t('marketplace.loginToPurchase')}
                 </p>
               </div>
             </Card>

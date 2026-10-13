@@ -129,13 +129,13 @@ const AppNavigation: React.FC<{ className?: string }> = ({ className }) => {
     { to: "/registry", label: "Registry", show: !!isAuthenticated },
     { to: "/marketplace", label: "Marketplace", show: !!isAuthenticated },
     // Role-restricted
-    { to: "/admin", label: "Admin Panel", show: !!isAuthenticated && user?.role === "Admin" },
+    { to: "/admin", label: "Admin Panel", show: !!isAuthenticated && user?.role === "admin" },
     {
       to: "/verification-workflow",
       label: "Verification",
       show:
         !!isAuthenticated &&
-        (user?.role === "Admin" || user?.role === "Govt Officer"),
+        (user?.role === "admin" || user?.role === "government_officer"),
     },
     // Authentication actions
     { to: "/login", label: "Login", show: !isAuthenticated },

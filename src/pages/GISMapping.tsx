@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useData } from '@/contexts/DataContext';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +15,7 @@ const InteractiveMap: React.FC = () => {
   const [selectedLayer, setSelectedLayer] = useState<'satellite' | 'drone' | 'heatmap'>('satellite');
   const [zoom, setZoom] = useState(5);
 
-  const drawMap = () => {
+  const drawMap = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -98,11 +98,11 @@ const InteractiveMap: React.FC = () => {
         ctx.stroke();
       });
     }
-  };
+  }, [selectedLayer, zoom]);
 
   useEffect(() => {
     drawMap();
-  }, [selectedLayer, zoom]);
+  }, [selectedLayer, zoom, drawMap]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -111,7 +111,7 @@ const InteractiveMap: React.FC = () => {
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [selectedLayer, zoom]); // Include dependencies to ensure proper redraw
+  }, [selectedLayer, zoom, drawMap]);
 
   return (
     <div className="relative">

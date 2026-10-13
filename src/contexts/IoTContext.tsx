@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useCallback, useContext, useState, useEffect } from 'react';
 
 export interface SensorData {
   id: string;
@@ -73,6 +73,18 @@ export const IoTProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [sensors, setSensors] = useState<IoTSensor[]>([]);
   const [sensorData, setSensorData] = useState<SensorData[]>([]);
 
+  const updateSensorData = useCallback((data: Omit<SensorData, 'id' | 'timestamp'>) => {
+    const newData: SensorData = {
+      ...data,
+      id: Date.now().toString(),
+      timestamp: new Date().toISOString(),
+    };
+
+    const updatedData = [newData, ...sensorData].slice(0, 1000); // Keep only last 1000 readings
+    setSensorData(updatedData);
+    localStorage.setItem('bluecarbon_sensor_data', JSON.stringify(updatedData));
+  }, [sensorData]);
+
   useEffect(() => {
     // Initialize sensors
     const storedSensors = localStorage.getItem('bluecarbon_sensors');
@@ -132,7 +144,7 @@ export const IoTProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }, 10000); // Update every 10 seconds
 
     return () => clearInterval(interval);
-  }, [sensors]);
+  }, [sensors, updateSensorData]);
 
   const addSensor = (sensorData: Omit<IoTSensor, 'id'>) => {
     const newSensor: IoTSensor = {
@@ -143,18 +155,6 @@ export const IoTProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const updatedSensors = [...sensors, newSensor];
     setSensors(updatedSensors);
     localStorage.setItem('bluecarbon_sensors', JSON.stringify(updatedSensors));
-  };
-
-  const updateSensorData = (data: Omit<SensorData, 'id' | 'timestamp'>) => {
-    const newData: SensorData = {
-      ...data,
-      id: Date.now().toString(),
-      timestamp: new Date().toISOString(),
-    };
-
-    const updatedData = [newData, ...sensorData].slice(0, 1000); // Keep only last 1000 readings
-    setSensorData(updatedData);
-    localStorage.setItem('bluecarbon_sensor_data', JSON.stringify(updatedData));
   };
 
   const getSensorsByProject = (projectId: string) => {
